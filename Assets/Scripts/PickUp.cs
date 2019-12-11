@@ -4,14 +4,23 @@ using UnityEngine;
 
 public class PickUp : MonoBehaviour
 {
-    enum Size { small = 1, medium, large };
+    // Used for selecting a crystals size
+    public enum CrystalSizes { small = 1, medium, large };
 
+    // The crystals size
     [SerializeField]
-    Size size { get; set; }
+    private CrystalSizes crystalSize;
     [SerializeField]
-    int worth { get; set; }
+    // The crystals worth to the player
+    private int score;
+    // The amount of fuel the crystal while provide
     [SerializeField]
-    float fuel { get; set; }
+    private float fuel;
+
+    // Getters and setters for various pickup attributes
+    public CrystalSizes CrystalSize { get { return crystalSize; } set { crystalSize = value; } }
+    public int Score { get { return score; } set { score = value; } }
+    public float Fuel { get { return fuel; } set { fuel = value; } }
 
     // Start is called before the first frame update
     void Start()

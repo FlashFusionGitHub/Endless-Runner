@@ -42,8 +42,11 @@ public class PlayerController : MonoBehaviour
         if(isGrounded)
             Jump();
 
-        if (fuel > 0)
+        if (fuel > 0f)
         {
+            // sets isFalling to false if the player collects fuel while falling
+            anim.SetBool("isFalling", false);
+
             // check player is touching ground - set isJumping animator state accordingly
             if (isGrounded)
             {
@@ -56,6 +59,9 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
+            // sets isJumping to false if the player runs out of fuel mid flight
+            anim.SetBool("isJumping", false);
+
             // check player is touching ground - set isJumping animator state accordingly
             if (isGrounded)
             {
@@ -91,8 +97,10 @@ public class PlayerController : MonoBehaviour
     void Propulsion()
     {
         // Apply an Upward force to the player while the UpArrow is pressed and the player is touching a platform
-        if (Input.GetKey(KeyCode.UpArrow) && fuel > 0)
+        if (Input.GetKey(KeyCode.UpArrow) && fuel > 0f)
         {
+            fuel -= 0.1f;
+
             rb.AddForce(new Vector2(0, propulsionForce), ForceMode2D.Force);
         }
     }
@@ -106,6 +114,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void Collect(PickUp pickUp)
+    {
+        fuel += pickUp.Fuel;
+    }
+
     // Check when the player enters or exits and platform - update grounded state accordingly
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -117,5 +130,14 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.collider.tag == "Platform")
             isGrounded = false;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "PickUp")
+        {
+            Collect(collision.GetComponent<PickUp>());
+            Destroy(collision.gameObject);
+        }
     }
 }
