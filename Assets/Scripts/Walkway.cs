@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// An infinitly scrolling walkway
+// An infinitely scrolling walkway
 public class Walkway : MonoBehaviour
 {
     [SerializeField]
     GameObject[] walkwayTiles;
+
+    [SerializeField]
+    int walkwaySpeed;
 
     // Start is called before the first frame update
     void Start()
@@ -20,7 +23,7 @@ public class Walkway : MonoBehaviour
         foreach(GameObject go in walkwayTiles)
         {
             float position = go.transform.position.x;
-            go.transform.position = new Vector2(position -= 5 * Time.deltaTime, go.transform.position.y);
+            go.transform.position = new Vector2(position -= walkwaySpeed * Time.deltaTime, go.transform.position.y);
 
             if(go.transform.position.x <= -11.77f)
             {

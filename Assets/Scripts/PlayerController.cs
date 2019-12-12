@@ -36,7 +36,6 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        MoveHorizontal();
         Propulsion();
 
         if(isGrounded)
@@ -72,26 +71,6 @@ public class PlayerController : MonoBehaviour
                 anim.SetBool("isFalling", true);
             }
         }
-    }
-
-    void MoveHorizontal()
-    {
-        // store the current horizontal user input 
-        float moveInput = Input.GetAxisRaw("Horizontal");
-        // Move left or right by applying a horizontal velocity to the player 
-        rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
-
-        // Rotate player transform to face its move direction
-        if (moveInput < 0) {
-            transform.rotation = new Quaternion(0, 180, 0, 0);
-        }
-
-        if (moveInput > 0) {
-            transform.rotation = new Quaternion(0, 0, 0, 0);
-        }
-
-        // set animator to walking if horizontal axis input is applied
-        anim.SetFloat("walking", Mathf.Abs(moveInput));
     }
 
     void Propulsion()
