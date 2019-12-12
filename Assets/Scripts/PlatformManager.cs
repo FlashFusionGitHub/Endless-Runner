@@ -24,6 +24,10 @@ public class PlatformManager : MonoBehaviour
 
     List<Platform> platforms = new List<Platform>();
 
+    bool spawnPlatforms;
+
+    public bool SpawnPlatform { get { return spawnPlatforms; } set { spawnPlatforms = value; } }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,15 +39,18 @@ public class PlatformManager : MonoBehaviour
     {
         spawnTimer -= Time.deltaTime;
 
-        if(spawnTimer <= 0)
+        if (spawnPlatforms)
         {
-            Platform plat = Instantiate(platform, new Vector2(transform.position.x, Random.Range(minYSpawn, maxYSpawn)), Quaternion.identity);
+            if (spawnTimer <= 0)
+            {
+                Platform plat = Instantiate(platform, new Vector2(transform.position.x, Random.Range(minYSpawn, maxYSpawn)), Quaternion.identity);
 
-            plat.PlatformSpeed = platformSpeed;
+                plat.PlatformSpeed = platformSpeed;
 
-            platforms.Add(plat);
+                platforms.Add(plat);
 
-            spawnTimer = spawnTime;
+                spawnTimer = spawnTime;
+            }
         }
 
         DestoryPlatform();

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -32,6 +33,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     PlayerController player;
 
+    float currentScore;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -41,7 +44,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        scoreText.text = player.Score.ToString();
+        StartCoroutine(AddScore());
 
         if(player.Died)
         {
@@ -52,8 +55,7 @@ public class GameManager : MonoBehaviour
     void Idle()
     {
         retryButton.gameObject.SetActive(false);
-
-        platformManager.gameObject.SetActive(false);
+        platformManager.SpawnPlatform = false;
         walkway.gameObject.SetActive(true);
     }
 
@@ -61,8 +63,12 @@ public class GameManager : MonoBehaviour
     {
         startButton.gameObject.SetActive(false);
         walkway.StopWalkway = true;
+        platformManager.SpawnPlatform = true;
+    }
 
-        platformManager.gameObject.SetActive(true);
+    public void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     void End()
@@ -83,5 +89,16 @@ public class GameManager : MonoBehaviour
     public void ToogleMute()
     {
 
+    }
+
+    IEnumerator AddScore()
+    {
+        while (currentScore < player.Score)
+        {
+            currentScore += Time.deltaTime;
+            currentScore = Mathf.Clamp(currentScore, 0f, player.Score);
+            scoreText.text = Mathf.RoundToInt(currentScore).ToString();
+            yield return null;
+        }
     }
 }

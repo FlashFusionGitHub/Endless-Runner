@@ -128,6 +128,7 @@ public class PlayerController : MonoBehaviour
         if (collision.collider.tag == "Spikes")
         {
             died = true;
+            gameObject.SetActive(false);
         }
     }
 
