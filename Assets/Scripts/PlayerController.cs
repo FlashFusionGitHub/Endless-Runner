@@ -10,19 +10,34 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     // Players max horizontal movement speed
-    public int moveSpeed;
+    [SerializeField]
+    int moveSpeed;
     // Players vertical propulsion force - for jetpack
-    public int propulsionForce;
+    [SerializeField]
+    int propulsionForce;
     // Players max vertical jumping force
-    public int jumpForce;
+    [SerializeField]
+    int jumpForce;
     // The players current grounded state - is the player touching a platform
-    public bool isGrounded;
+    [SerializeField]
+    bool isGrounded;
     // Reference to the players rigidbody component
     Rigidbody2D rb;
     //Reference to the players animator
     Animator anim;
     // Jetpack current fuel amount
-    public float fuel;
+    [SerializeField]
+    float fuel;
+    // The players current score
+    [SerializeField]
+    int score;
+    // The players dead / alive state
+    [SerializeField]
+    bool died;
+
+    public int Score { get { return score; } }
+
+    public bool Died { get { return died; } }
 
     // Start is called before the first frame update
     void Start()
@@ -96,6 +111,7 @@ public class PlayerController : MonoBehaviour
     void Collect(PickUp pickUp)
     {
         fuel += pickUp.Fuel;
+        score += pickUp.Score;
     }
 
     // Check when the player enters or exits and platform - update grounded state accordingly
@@ -107,6 +123,11 @@ public class PlayerController : MonoBehaviour
             {
                 isGrounded = true;
             }
+        }
+
+        if (collision.collider.tag == "Spikes")
+        {
+            died = true;
         }
     }
 

@@ -268,6 +268,8 @@ MonoBehaviour:
   jumpForce: 500
   isGrounded: 0
   fuel: 10
+  score: 0
+  died: 0
 --- !u!95 &27661413
 Animator:
   serializedVersion: 3
@@ -1042,7 +1044,7 @@ GameObject:
   - component: {fileID: 618574117}
   - component: {fileID: 618574118}
   m_Layer: 0
-  m_Name: Platform Spawner
+  m_Name: Platform Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1794,8 +1796,10 @@ MonoBehaviour:
   retryButton: {fileID: 2079026316}
   pauseButton: {fileID: 1375605486}
   resumeButton: {fileID: 110044710}
-  platformSpawner: {fileID: 618574118}
+  platformManager: {fileID: 618574118}
   walkway: {fileID: 1233608584}
+  scoreText: {fileID: 1805622080}
+  player: {fileID: 27661412}
 --- !u!4 &1188071779
 Transform:
   m_ObjectHideFlags: 0
@@ -2423,7 +2427,7 @@ GameObject:
   - component: {fileID: 1805622081}
   - component: {fileID: 1805622080}
   m_Layer: 5
-  m_Name: Score
+  m_Name: Score Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2479,7 +2483,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 99999
+  m_Text: 0
 --- !u!222 &1805622081
 CanvasRenderer:
   m_ObjectHideFlags: 0
