@@ -11,10 +11,19 @@ public class Walkway : MonoBehaviour
     [SerializeField]
     int walkwaySpeed;
 
+    bool stopWalkway;
+
+    public bool StopWalkway { get { return stopWalkway; } set { stopWalkway = value; } }
+
+    Vector2[] originPositions = new Vector2[6];
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        for(int i = 0; i < walkwayTiles.Length; i++)
+        {
+            originPositions[i] = walkwayTiles[i].transform.position;
+        }
     }
 
     // Update is called once per frame
@@ -25,10 +34,30 @@ public class Walkway : MonoBehaviour
             float position = go.transform.position.x;
             go.transform.position = new Vector2(position -= walkwaySpeed * Time.deltaTime, go.transform.position.y);
 
-            if(go.transform.position.x <= -11.77f)
+            if (!stopWalkway)
             {
-                go.transform.position = new Vector2(15.23f, go.transform.position.y);
+                RecycleWalkwayBlock(go);
             }
+            else
+            {
+                DisableWalkway(go);
+            }
+        }
+    }
+
+    void RecycleWalkwayBlock(GameObject go)
+    {
+        if (go.transform.position.x <= -11.77f)
+        {
+            go.transform.position = new Vector2(15.23f, go.transform.position.y);
+        }
+    }
+
+    void DisableWalkway(GameObject go)
+    {
+        if (go.transform.position.x <= -12f)
+        {
+            go.SetActive(false);
         }
     }
 }

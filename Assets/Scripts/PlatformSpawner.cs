@@ -18,10 +18,12 @@ public class PlatformSpawner : MonoBehaviour
     [SerializeField]
     float minYSpawn, maxYSpawn;
 
+    [SerializeField]
+    int platformSpeed;
+
     // Start is called before the first frame update
     void Start()
     {
-
     }
 
     // Update is called once per frame
@@ -31,7 +33,8 @@ public class PlatformSpawner : MonoBehaviour
 
         if(spawnTimer <= 0)
         {
-            Instantiate(platform, new Vector2(transform.position.x, Random.Range(minYSpawn, maxYSpawn)), Quaternion.identity);
+            Platform plat = Instantiate(platform, new Vector2(transform.position.x, Random.Range(minYSpawn, maxYSpawn)), Quaternion.identity);
+            plat.PlatformSpeed = platformSpeed;
             spawnTimer = spawnTime;
         }
     }

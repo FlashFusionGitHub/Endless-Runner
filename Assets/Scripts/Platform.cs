@@ -13,8 +13,11 @@ public class Platform : MonoBehaviour
     [SerializeField]
     List<Transform> objectSpawnPositions;
 
-    float obstaclePosition;
+    int platformSpeed;
 
+    public int PlatformSpeed { get { return platformSpeed; } set { platformSpeed = value; } }
+
+    float obstaclePosition;
 
     bool spawnCrystal;
 
@@ -42,7 +45,7 @@ public class Platform : MonoBehaviour
     void Update()
     {
         // Move the platform each frame
-        transform.position = new Vector2(obstaclePosition -= 2 * Time.deltaTime, transform.position.y);
+        transform.position = new Vector2(obstaclePosition -= platformSpeed * Time.deltaTime, transform.position.y);
     }
 
     // Used to track the number of obstacles and crystals spawned on a platform
