@@ -10,9 +10,11 @@ public class PickUp : MonoBehaviour
     // The crystals size
     [SerializeField]
     private CrystalSizes crystalSize;
-    [SerializeField]
+
     // The crystals worth to the player
+    [SerializeField]
     private int score;
+
     // The amount of fuel the crystal while provide
     [SerializeField]
     private float fuel;

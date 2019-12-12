@@ -122,8 +122,16 @@ public class PlayerController : MonoBehaviour
     // Check when the player enters or exits and platform - update grounded state accordingly
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider.tag == "Platform") 
+        if (collision.collider.tag == "Platform")
             isGrounded = true;
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.collider.tag == "Platform")
+        {
+            transform.SetParent(collision.transform);
+        }
     }
 
     private void OnCollisionExit2D(Collision2D collision)

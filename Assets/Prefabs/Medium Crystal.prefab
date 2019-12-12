@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7009217871616014316}
   - component: {fileID: 6763741630187851695}
   - component: {fileID: 186407582641901578}
+  - component: {fileID: 857699688882365687}
   m_Layer: 9
   m_Name: Medium Crystal
   m_TagString: PickUp
@@ -27,8 +28,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5097188970224517714}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.170603, y: -1.4088827, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.23750001, y: 0.23750001, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -123,3 +124,23 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2, y: 6}
   m_EdgeRadius: 0
+--- !u!1818360610 &857699688882365687
+ScaleConstraint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5097188970224517714}
+  m_Enabled: 1
+  m_Weight: 0.05
+  m_ScaleAtRest: {x: 0.15, y: 0.15, z: 1}
+  m_ScaleOffset: {x: 1, y: 1, z: 1}
+  m_AffectScalingX: 1
+  m_AffectScalingY: 1
+  m_AffectScalingZ: 1
+  m_IsContraintActive: 1
+  m_IsLocked: 1
+  m_Sources:
+  - sourceTransform: {fileID: 2369600730989692371, guid: 75601b76ea36c3640be9d07ffe722bf3,
+      type: 3}
+    weight: 1
