@@ -5,30 +5,24 @@ using UnityEngine;
 // An infinitely scrolling walkway
 public class Walkway : MonoBehaviour
 {
+    // Reference to the walkway tile gameobjects
     [SerializeField]
     GameObject[] walkwayTiles;
 
+    // The walkways max move speed
     [SerializeField]
     int walkwaySpeed;
 
+    // Boolean to stop the walkway recycling tiles
     bool stopWalkway;
 
+    // Getter and Setter for stopwalking boolean
     public bool StopWalkway { get { return stopWalkway; } set { stopWalkway = value; } }
-
-    Vector2[] originPositions = new Vector2[6];
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        for(int i = 0; i < walkwayTiles.Length; i++)
-        {
-            originPositions[i] = walkwayTiles[i].transform.position;
-        }
-    }
 
     // Update is called once per frame
     void Update()
     {
+        // Updates the position of every walkway tile each frame
         foreach(GameObject go in walkwayTiles)
         {
             float position = go.transform.position.x;
@@ -45,6 +39,7 @@ public class Walkway : MonoBehaviour
         }
     }
 
+    // Sets the position of the last tile to the fornt of the queue
     void RecycleWalkwayBlock(GameObject go)
     {
         if (go.transform.position.x <= -11.77f)
@@ -53,6 +48,7 @@ public class Walkway : MonoBehaviour
         }
     }
 
+    // Disables the walkways tiles once they reach a specific X position
     void DisableWalkway(GameObject go)
     {
         if (go.transform.position.x <= -12f)

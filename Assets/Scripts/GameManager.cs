@@ -4,40 +4,40 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+// Manages the Game states
 public class GameManager : MonoBehaviour
 {
-    // Idle Game
-    // Play Game
-    // End Game 
-    // Pause / Resume
-    // Mute / Unmute audio
-
+    // References to various buttons
     [SerializeField]
     Button startButton;
-
     [SerializeField]
     Button retryButton;
-
     [SerializeField]
     Button pauseButton, resumeButton;
 
+    // Reference to the platform manager
     [SerializeField]
     PlatformManager platformManager;
 
+    // Reference to the walkway
     [SerializeField]
     Walkway walkway;
 
+    // Reference to the score text UI element
     [SerializeField]
     Text scoreText;
 
+    // Reference to the player
     [SerializeField]
     PlayerController player;
 
+    // Temp current score
     float currentScore;
 
     // Start is called before the first frame update
     void Start()
     {
+        AudioManager.Instance.PlayAudio("Music");
         Idle();
     }
 
@@ -84,11 +84,6 @@ public class GameManager : MonoBehaviour
     public void Resume()
     {
         Time.timeScale = 1;
-    }
-
-    public void ToogleMute()
-    {
-
     }
 
     IEnumerator AddScore()

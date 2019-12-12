@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
     bool isGrounded;
     // Reference to the players rigidbody component
     Rigidbody2D rb;
-    //Reference to the players animator
+    // Reference to the players animator
     Animator anim;
     // Jetpack current fuel amount
     [SerializeField]
@@ -35,8 +35,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     bool died;
 
+    // Getters for score and died
     public int Score { get { return score; } }
-
     public bool Died { get { return died; } }
 
     // Start is called before the first frame update
@@ -95,8 +95,16 @@ public class PlayerController : MonoBehaviour
         {
             fuel -= 0.1f;
 
+            if (!AudioManager.Instance.GetAudio("JetPack").source.isPlaying)
+                AudioManager.Instance.PlayAudio("JetPack");
+
             rb.AddForce(new Vector2(0, propulsionForce), ForceMode2D.Force);
-        }
+        } 
+        else
+        {
+            if (AudioManager.Instance.GetAudio("JetPack").source.isPlaying)
+                AudioManager.Instance.GetAudio("JetPack").source.Stop();
+        }     
     }
 
     void Jump()
@@ -104,12 +112,14 @@ public class PlayerController : MonoBehaviour
         // Apply an Upward force to the player if the UpArrow is pressed and the player is touching a platform
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            AudioManager.Instance.PlayAudio("Jump");
             rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Force);
         }
     }
 
     void Collect(PickUp pickUp)
     {
+        AudioManager.Instance.PlayAudio("Collect");
         fuel += pickUp.Fuel;
         score += pickUp.Score;
     }
@@ -127,6 +137,11 @@ public class PlayerController : MonoBehaviour
 
         if (collision.collider.tag == "Spikes")
         {
+            if (AudioManager.Instance.GetAudio("JetPack").source.isPlaying)
+                AudioManager.Instance.GetAudio("JetPack").source.Stop();
+
+            AudioManager.Instance.PlayAudio("Die");
+
             died = true;
             gameObject.SetActive(false);
         }

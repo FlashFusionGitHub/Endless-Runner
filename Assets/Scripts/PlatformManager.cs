@@ -2,13 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Manages every instatiated platform in the scene - used for:
+// controlling platforms speed
+// instantiating platforms at a given frequency
+// destroying platforms
+
 public class PlatformManager : MonoBehaviour
 {
     // The platform to spawn
     [SerializeField]
     Platform platform;
 
-    // The frequecny in which platforms are spawned
+    // The frequency in which platforms are spawned
     [SerializeField]
     float spawnTime;
 
@@ -19,13 +24,17 @@ public class PlatformManager : MonoBehaviour
     [SerializeField]
     float minYSpawn, maxYSpawn;
 
+    // the platforms max move speed
     [SerializeField]
     int platformSpeed;
 
+    // A list to hold all instantiated platforms
     List<Platform> platforms = new List<Platform>();
 
+    // boolean used to toogle when a new platform is instantiated
     bool spawnPlatforms;
 
+    // Getter and Setter for spawnPlatforms boolean
     public bool SpawnPlatform { get { return spawnPlatforms; } set { spawnPlatforms = value; } }
 
     // Start is called before the first frame update
@@ -56,6 +65,7 @@ public class PlatformManager : MonoBehaviour
         DestoryPlatform();
     }
 
+    // Destroys platforms once they reach a specific distance
     void DestoryPlatform()
     {
         foreach(Platform plat in platforms.ToArray())
