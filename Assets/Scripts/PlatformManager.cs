@@ -44,7 +44,7 @@ public class PlatformManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public void PlatformManagerUpdate()
     {
         spawnTimer -= Time.deltaTime;
 

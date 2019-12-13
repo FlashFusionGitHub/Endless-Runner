@@ -97,7 +97,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crystalSize: 3
   score: 50
-  fuel: 10
+  fuel: 5
 --- !u!61 &7732061279104109566
 BoxCollider2D:
   m_ObjectHideFlags: 0

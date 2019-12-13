@@ -61,6 +61,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     Button jumpButton, boostButton;
 
+    bool pause;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -72,16 +74,23 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        StartCoroutine(AddScore());
 
-        if (player.Died)
+        if (!pause)
         {
-            if (!doOnce)
-            {
-                End();
+            StartCoroutine(AddScore());
 
-                doOnce = true;
+            if (player.Died)
+            {
+                if (!doOnce)
+                {
+                    End();
+
+                    doOnce = true;
+                }
             }
+
+            player.PlayerUpdate();
+            platformManager.PlatformManagerUpdate();
         }
     }
 
@@ -97,10 +106,7 @@ public class GameManager : MonoBehaviour
         walkway.StopWalkway = true;
         platformManager.SpawnPlatform = true;
 
-#if UNITY_ANDROID && !UNITY_EDITOR
-        jumpButton.gameObject.SetActive(true);
-        boostButton.gameObject.SetActive(true);
-#endif
+        EnableAndroidButtons();
     }
 
     public void Restart()
@@ -110,6 +116,9 @@ public class GameManager : MonoBehaviour
 
     void End()
     {
+
+        DisableAndroidButtons();
+
         fuelGauge.SetActive(false);
         retryButton.gameObject.SetActive(true);
         pauseButton.gameObject.SetActive(false);
@@ -132,12 +141,18 @@ public class GameManager : MonoBehaviour
 
     public void Pause()
     {
+        pause = true;
         Time.timeScale = 0;
+
+        DisableAndroidButtons();
     }
 
     public void Resume()
     {
+        pause = false;
         Time.timeScale = 1;
+
+        EnableAndroidButtons();
     }
 
     IEnumerator AddScore()
@@ -149,5 +164,21 @@ public class GameManager : MonoBehaviour
             scoreText.text = Mathf.RoundToInt(currentScore).ToString();
             yield return null;
         }
+    }
+
+    void DisableAndroidButtons()
+    {
+#if UNITY_ANDROID && !UNITY_EDITOR
+        jumpButton.gameObject.SetActive(false);
+        boostButton.gameObject.SetActive(false);
+#endif
+    }
+
+    void EnableAndroidButtons()
+    {
+#if UNITY_ANDROID && !UNITY_EDITOR
+        jumpButton.gameObject.SetActive(true);
+        boostButton.gameObject.SetActive(true);
+#endif
     }
 }
