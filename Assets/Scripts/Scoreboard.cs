@@ -10,7 +10,6 @@ public class Scoreboard : MonoBehaviour
     struct HighScoreEntry
     {
         public int score;
-        public string name;
     }
 
     // highscores that holds a list of HighScoreEntries
@@ -59,11 +58,11 @@ public class Scoreboard : MonoBehaviour
             // If no highscores exist full table will empty score data
             hsEntryList = new List<HighScoreEntry>()
             {
-                new HighScoreEntry { score = 0, name = "-"},
-                new HighScoreEntry { score = 0, name = "-"},
-                new HighScoreEntry { score = 0, name = "-"},
-                new HighScoreEntry { score = 0, name = "-"},
-                new HighScoreEntry { score = 0, name = "-"}
+                new HighScoreEntry { score = 0 },
+                new HighScoreEntry { score = 0 },
+                new HighScoreEntry { score = 0 },
+                new HighScoreEntry { score = 0 },
+                new HighScoreEntry { score = 0 }
             };
 
             hsEntryTransforms = new List<Transform>();
@@ -80,10 +79,10 @@ public class Scoreboard : MonoBehaviour
         }
     }
 
-    public void AddHighScoreEntry(int score, string name)
+    public void AddHighScoreEntry(int score)
     {
         //Create Highscore Entry
-        HighScoreEntry hsEntry = new HighScoreEntry { score = score, name = name };
+        HighScoreEntry hsEntry = new HighScoreEntry { score = score };
 
         // Load saved Highscores
         string jsonString = PlayerPrefs.GetString("highscoreTable");
@@ -119,7 +118,6 @@ public class Scoreboard : MonoBehaviour
         }
 
         highscoreTransform.Find("Position Text").GetComponent<Text>().text = rankString;
-        highscoreTransform.Find("Name").GetComponent<Text>().text = hsEntry.name;
         highscoreTransform.Find("Score Text").GetComponent<Text>().text = hsEntry.score.ToString();
 
         transforms.Add(highscoreTransform);

@@ -74,8 +74,7 @@ public class GameManager : MonoBehaviour
     {
         StartCoroutine(AddScore());
 
-
-        if(player.Died)
+        if (player.Died)
         {
             if (!doOnce)
             {
@@ -94,15 +93,14 @@ public class GameManager : MonoBehaviour
 
     public void Play()
     {
-
-#if UNITY_ANDROID
-        jumpButton.enabled = true;
-        boostButton.enabled = true;
-#endif
-
         startButton.gameObject.SetActive(false);
         walkway.StopWalkway = true;
         platformManager.SpawnPlatform = true;
+
+#if UNITY_ANDROID && !UNITY_EDITOR
+        jumpButton.gameObject.SetActive(true);
+        boostButton.gameObject.SetActive(true);
+#endif
     }
 
     public void Restart()
@@ -129,7 +127,7 @@ public class GameManager : MonoBehaviour
             diedText.gameObject.SetActive(true);
         }
 
-        scoreboard.AddHighScoreEntry(player.Score, "ABC");
+        scoreboard.AddHighScoreEntry(player.Score);
     }
 
     public void Pause()

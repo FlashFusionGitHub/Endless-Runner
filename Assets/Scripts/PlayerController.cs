@@ -10,9 +10,6 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-    // Players max horizontal movement speed
-    [SerializeField]
-    int moveSpeed;
     // Players vertical propulsion force - for jetpack
     [SerializeField]
     int propulsionForce;
@@ -48,6 +45,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     Image fuelGauge;
 
+    bool boost;
 
     // Getters for score and died
     public int Score { get { return score; } }
@@ -60,8 +58,6 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         // Get the players animator component
         anim = GetComponent<Animator>();
-
-
     }
 
     // Update is called once per frame
@@ -69,10 +65,32 @@ public class PlayerController : MonoBehaviour
     {
         UpdateFuelGauge();
 
-        Propulsion();
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR
 
-        if(isGrounded)
+        if (Input.GetKey(KeyCode.UpArrow))
+        {
+            boost = true;
+        }
+        else
+        {
+            boost = false;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
             Jump();
+        }
+#endif
+
+        if(boost)
+        {
+            Propulsion();
+        }
+        else
+        {
+            if (audioManager.GetAudio("JetPack").source.isPlaying)
+                audioManager.GetAudio("JetPack").source.Stop();
+        }
 
         if (fuelGauge.fillAmount > 0f)
         {
@@ -108,43 +126,32 @@ public class PlayerController : MonoBehaviour
 
     void Propulsion()
     {
-#if UNITY_STANDALONE_WIN || UNITY_EDITOR
-        // Apply an Upward force to the player while the UpArrow is pressed and the player is touching a platform
-        if (Input.GetKey(KeyCode.UpArrow) && currentFuel > 0f)
+        // Apply an Upward force to the player
+        if (currentFuel > 0f)
         {
             currentFuel -= 0.1f;
 
+            rb.AddForce(new Vector2(0, propulsionForce), ForceMode2D.Force);
+
             if (!audioManager.GetAudio("JetPack").source.isPlaying)
                 audioManager.PlayAudio("JetPack");
-
-            rb.AddForce(new Vector2(0, propulsionForce), ForceMode2D.Force);
-        } 
+        }
         else
         {
             if (audioManager.GetAudio("JetPack").source.isPlaying)
                 audioManager.GetAudio("JetPack").source.Stop();
-        }     
-#endif
-
-#if UNITY_ANDROID
-
-#endif
+        }
     }
 
-    void Jump()
+    public void Jump()
     {
-#if UNITY_STANDALONE_WIN || UNITY_EDITOR
-        // Apply an Upward force to the player if the UpArrow is pressed and the player is touching a platform
-        if (Input.GetKeyDown(KeyCode.Space))
+        // Apply an Upward force to the player if player is touching a platform
+        if (isGrounded)
         {
             audioManager.PlayAudio("Jump");
             rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Force);
         }
-#endif
 
-#if UNITY_ANDROID
-
-#endif
     }
 
     void Collect(PickUp pickUp)
@@ -204,5 +211,15 @@ public class PlayerController : MonoBehaviour
             Collect(collision.GetComponent<PickUp>());
             Destroy(collision.gameObject);
         }
+    }
+
+    public void boostOnPress()
+    {
+        boost = true;
+    }
+
+    public void boostOnRelease()
+    {
+        boost = false;
     }
 }

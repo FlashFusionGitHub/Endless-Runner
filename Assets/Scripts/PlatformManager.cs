@@ -70,7 +70,7 @@ public class PlatformManager : MonoBehaviour
     {
         foreach(Platform plat in platforms.ToArray())
         {
-            if(plat.transform.position.x <= -12)
+            if(plat.transform.position.x <= -15)
             {
                 Platform tempPlat = plat;
 

@@ -19,6 +19,14 @@ public class Walkway : MonoBehaviour
     // Getter and Setter for stopwalking boolean
     public bool StopWalkway { get { return stopWalkway; } set { stopWalkway = value; } }
 
+    Vector3 firstTilePosition, lastTilePosition;
+
+    private void Awake()
+    {
+        firstTilePosition = walkwayTiles[0].transform.position;
+        lastTilePosition = walkwayTiles[6].transform.position;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -42,16 +50,16 @@ public class Walkway : MonoBehaviour
     // Sets the position of the last tile to the fornt of the queue
     void RecycleWalkwayBlock(GameObject go)
     {
-        if (go.transform.position.x <= -11.77f)
+        if (go.transform.position.x <= firstTilePosition.x)
         {
-            go.transform.position = new Vector2(15.23f, go.transform.position.y);
+            go.transform.position = new Vector2(lastTilePosition.x, go.transform.position.y);
         }
     }
 
     // Disables the walkways tiles once they reach a specific X position
     void DisableWalkway(GameObject go)
     {
-        if (go.transform.position.x <= -12f)
+        if (go.transform.position.x <= firstTilePosition.x)
         {
             go.SetActive(false);
         }
