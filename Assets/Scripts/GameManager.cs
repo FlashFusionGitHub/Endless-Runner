@@ -23,6 +23,14 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     Walkway walkway;
 
+    // Reference to the Died text UI element
+    [SerializeField]
+    Text diedText;
+
+    // Reference to the new highscore text UI element
+    [SerializeField]
+    Text NewHighscoreText;
+
     // Reference to the score text UI element
     [SerializeField]
     Text scoreText;
@@ -34,9 +42,16 @@ public class GameManager : MonoBehaviour
     // Temp current score
     float currentScore;
 
+    // Reference to the scoreboard
+    [SerializeField]
+    Scoreboard scoreboard;
+
+    bool doOnce;
+
     // Start is called before the first frame update
     void Start()
     {
+        scoreboard.gameObject.SetActive(false);
         AudioManager.Instance.PlayAudio("Music");
         Idle();
     }
@@ -46,15 +61,20 @@ public class GameManager : MonoBehaviour
     {
         StartCoroutine(AddScore());
 
+
         if(player.Died)
         {
-            End();
+            if (!doOnce)
+            {
+                End();
+
+                doOnce = true;
+            }
         }
     }
 
     void Idle()
     {
-        retryButton.gameObject.SetActive(false);
         platformManager.SpawnPlatform = false;
         walkway.gameObject.SetActive(true);
     }
@@ -74,6 +94,23 @@ public class GameManager : MonoBehaviour
     void End()
     {
         retryButton.gameObject.SetActive(true);
+        pauseButton.gameObject.SetActive(false);
+
+        AudioManager.Instance.GetAudio("Music").source.Stop();
+
+        if (player.Score > scoreboard.HighestScore)
+        {
+            AudioManager.Instance.PlayAudio("Win");
+            NewHighscoreText.gameObject.SetActive(true);
+        }
+        else
+        {
+            AudioManager.Instance.PlayAudio("Lose");
+            diedText.gameObject.SetActive(true);
+        }
+
+
+        scoreboard.AddHighScoreEntry(player.Score, "ABC");
     }
 
     public void Pause()
