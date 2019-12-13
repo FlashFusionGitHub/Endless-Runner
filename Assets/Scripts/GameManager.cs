@@ -46,13 +46,26 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     Scoreboard scoreboard;
 
+    // Reference to the fuel gauge UI element
+    [SerializeField]
+    GameObject fuelGauge;
+
     bool doOnce;
+
+    [SerializeField]
+    Canvas canvas;
+
+    [SerializeField]
+    AudioManager audioManager;
+
+    [SerializeField]
+    Button jumpButton, boostButton;
 
     // Start is called before the first frame update
     void Start()
     {
         scoreboard.gameObject.SetActive(false);
-        AudioManager.Instance.PlayAudio("Music");
+        audioManager.PlayAudio("Music");
         Idle();
     }
 
@@ -81,6 +94,12 @@ public class GameManager : MonoBehaviour
 
     public void Play()
     {
+
+#if UNITY_ANDROID
+        jumpButton.enabled = true;
+        boostButton.enabled = true;
+#endif
+
         startButton.gameObject.SetActive(false);
         walkway.StopWalkway = true;
         platformManager.SpawnPlatform = true;
@@ -93,22 +112,22 @@ public class GameManager : MonoBehaviour
 
     void End()
     {
+        fuelGauge.SetActive(false);
         retryButton.gameObject.SetActive(true);
         pauseButton.gameObject.SetActive(false);
 
-        AudioManager.Instance.GetAudio("Music").source.Stop();
+        audioManager.GetAudio("Music").source.Stop();
 
         if (player.Score > scoreboard.HighestScore)
         {
-            AudioManager.Instance.PlayAudio("Win");
+            audioManager.PlayAudio("Win");
             NewHighscoreText.gameObject.SetActive(true);
         }
         else
         {
-            AudioManager.Instance.PlayAudio("Lose");
+            audioManager.PlayAudio("Lose");
             diedText.gameObject.SetActive(true);
         }
-
 
         scoreboard.AddHighScoreEntry(player.Score, "ABC");
     }

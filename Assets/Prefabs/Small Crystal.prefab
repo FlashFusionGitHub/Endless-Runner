@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 3122091646371036100}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
+  m_LocalScale: {x: 0.36, y: 0.36, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -95,7 +95,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 734b115a379c7ac4abbfd9644f6eafa2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  crystalSize: 0
+  crystalSize: 1
   score: 10
   fuel: 3
 --- !u!61 &3344689213722939530

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 /* Player controller can perform the following functions
     - Moving & Jumping
@@ -25,15 +26,28 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D rb;
     // Reference to the players animator
     Animator anim;
+
     // Jetpack current fuel amount
     [SerializeField]
-    float fuel;
+    float currentFuel;
+    // The max fuel the play can carry
+    [SerializeField]
+    float maxFuel;
+
     // The players current score
     [SerializeField]
     int score;
     // The players dead / alive state
     [SerializeField]
     bool died;
+    // Reference to audio manager
+    [SerializeField]
+    AudioManager audioManager;
+
+    // Reference to the fuel gauge image
+    [SerializeField]
+    Image fuelGauge;
+
 
     // Getters for score and died
     public int Score { get { return score; } }
@@ -46,17 +60,21 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         // Get the players animator component
         anim = GetComponent<Animator>();
+
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        UpdateFuelGauge();
+
         Propulsion();
 
         if(isGrounded)
             Jump();
 
-        if (fuel > 0f)
+        if (fuelGauge.fillAmount > 0f)
         {
             // sets isFalling to false if the player collects fuel while falling
             anim.SetBool("isFalling", false);
@@ -90,38 +108,62 @@ public class PlayerController : MonoBehaviour
 
     void Propulsion()
     {
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR
         // Apply an Upward force to the player while the UpArrow is pressed and the player is touching a platform
-        if (Input.GetKey(KeyCode.UpArrow) && fuel > 0f)
+        if (Input.GetKey(KeyCode.UpArrow) && currentFuel > 0f)
         {
-            fuel -= 0.1f;
+            currentFuel -= 0.1f;
 
-            if (!AudioManager.Instance.GetAudio("JetPack").source.isPlaying)
-                AudioManager.Instance.PlayAudio("JetPack");
+            if (!audioManager.GetAudio("JetPack").source.isPlaying)
+                audioManager.PlayAudio("JetPack");
 
             rb.AddForce(new Vector2(0, propulsionForce), ForceMode2D.Force);
         } 
         else
         {
-            if (AudioManager.Instance.GetAudio("JetPack").source.isPlaying)
-                AudioManager.Instance.GetAudio("JetPack").source.Stop();
+            if (audioManager.GetAudio("JetPack").source.isPlaying)
+                audioManager.GetAudio("JetPack").source.Stop();
         }     
+#endif
+
+#if UNITY_ANDROID
+
+#endif
     }
 
     void Jump()
     {
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR
         // Apply an Upward force to the player if the UpArrow is pressed and the player is touching a platform
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            AudioManager.Instance.PlayAudio("Jump");
+            audioManager.PlayAudio("Jump");
             rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Force);
         }
+#endif
+
+#if UNITY_ANDROID
+
+#endif
     }
 
     void Collect(PickUp pickUp)
     {
-        AudioManager.Instance.PlayAudio("Collect");
-        fuel += pickUp.Fuel;
+        audioManager.PlayAudio("Collect");
+        
+        currentFuel += pickUp.Fuel;
+
         score += pickUp.Score;
+    }
+
+    // Update fuel gauage image fill amount 
+    void UpdateFuelGauge()
+    {
+        // check that current fuel does not exceed max fuel
+        if (currentFuel > maxFuel)
+            currentFuel = maxFuel;
+
+        fuelGauge.fillAmount = currentFuel / maxFuel;
     }
 
     // Check when the player enters or exits and platform - update grounded state accordingly
@@ -137,10 +179,10 @@ public class PlayerController : MonoBehaviour
 
         if (collision.collider.tag == "Spikes")
         {
-            if (AudioManager.Instance.GetAudio("JetPack").source.isPlaying)
-                AudioManager.Instance.GetAudio("JetPack").source.Stop();
+            if (audioManager.GetAudio("JetPack").source.isPlaying)
+                audioManager.GetAudio("JetPack").source.Stop();
 
-            AudioManager.Instance.PlayAudio("Die");
+            audioManager.PlayAudio("Die");
 
             died = true;
             gameObject.SetActive(false);

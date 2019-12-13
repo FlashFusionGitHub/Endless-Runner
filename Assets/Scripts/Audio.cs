@@ -6,6 +6,9 @@ using UnityEngine;
 [System.Serializable]
 public class Audio
 {
+    // Used for selecting audio type ( is this audio clip music or sfx)
+    public enum AudioType { MUSIC = 1, SFX };
+
     // The clips name
     [SerializeField]
     string audioName;
@@ -13,6 +16,9 @@ public class Audio
     // The audio clip
     [SerializeField]
     AudioClip clip;
+
+    [SerializeField]
+    AudioType audioType;
 
     // The audio clips volume - ( min = 0 max = 1 )
     [SerializeField]
@@ -30,6 +36,7 @@ public class Audio
     // Getters and Setters for Audio attributes
     public string AudioName { get { return audioName; } }
     public AudioClip Clip { get { return clip; } }
+    public AudioType _AudioType { get { return audioType; } }
     public float Volume { get { return volume; } set { volume = value; } }
     public bool Loop { get { return loop; } }
 }

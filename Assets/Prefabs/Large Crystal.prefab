@@ -95,7 +95,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 734b115a379c7ac4abbfd9644f6eafa2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  crystalSize: 0
+  crystalSize: 3
   score: 50
   fuel: 10
 --- !u!61 &7732061279104109566

@@ -5,7 +5,7 @@ using UnityEngine;
 public class PickUp : MonoBehaviour
 {
     // Used for selecting a crystals size
-    public enum CrystalSizes { small = 1, medium, large };
+    public enum CrystalSizes { SMALL = 1, MEDIUM, LARGE };
 
     // The crystals size
     [SerializeField]
