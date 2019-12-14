@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -7,6 +6,7 @@ using UnityEngine.SceneManagement;
 // Manages the Game states
 public class GameManager : MonoBehaviour
 {
+#pragma warning disable 649
     // References to various buttons
     [SerializeField]
     Button startButton;
@@ -14,52 +14,42 @@ public class GameManager : MonoBehaviour
     Button retryButton;
     [SerializeField]
     Button pauseButton;
-
     // Reference to the platform manager
     [SerializeField]
     PlatformManager platformManager;
-
     // Reference to the walkway
     [SerializeField]
     Walkway walkway;
-
     // Reference to the Died text UI element
     [SerializeField]
     Text diedText;
-
     // Reference to the new highscore text UI element
     [SerializeField]
     Text NewHighscoreText;
-
     // Reference to the score text UI element
     [SerializeField]
     Text scoreText;
-
     // Reference to the player
     [SerializeField]
     PlayerController player;
+    // Reference to the scoreboard
+    [SerializeField]
+    Scoreboard scoreboard;
+    // Reference to the fuel gauge UI element
+    [SerializeField]
+    GameObject fuelGauge;
+    [SerializeField]
+    Canvas canvas;
+    [SerializeField]
+    AudioManager audioManager;
+    [SerializeField]
+    Button jumpButton, boostButton;
+#pragma warning restore 649
 
     // Temp current score
     float currentScore;
 
-    // Reference to the scoreboard
-    [SerializeField]
-    Scoreboard scoreboard;
-
-    // Reference to the fuel gauge UI element
-    [SerializeField]
-    GameObject fuelGauge;
-
     bool doOnce;
-
-    [SerializeField]
-    Canvas canvas;
-
-    [SerializeField]
-    AudioManager audioManager;
-
-    [SerializeField]
-    Button jumpButton, boostButton;
 
     bool pause;
 
@@ -72,7 +62,7 @@ public class GameManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
 
         if (!pause)

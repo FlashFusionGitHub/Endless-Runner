@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 // Audio class is used for holding every important audio attribute in one place
 [System.Serializable]
@@ -9,25 +7,23 @@ public class Audio
     // Used for selecting audio type ( is this audio clip music or sfx)
     public enum AudioType { MUSIC = 1, SFX };
 
+#pragma warning disable 649
     // The clips name
     [SerializeField]
     string audioName;
-
     // The audio clip
     [SerializeField]
     AudioClip clip;
-
     [SerializeField]
     AudioType audioType;
-
     // The audio clips volume - ( min = 0 max = 1 )
     [SerializeField]
     [Range(0, 1)]
     float volume;
-
     // Enable looping audio
     [SerializeField]
     bool loop;
+#pragma warning restore 649
 
     // The Audio source component
     [HideInInspector]

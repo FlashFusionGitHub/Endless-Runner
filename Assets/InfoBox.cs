@@ -3,10 +3,12 @@
 /*A simple switch that changes the instructions depending on the device used*/
 public class InfoBox : MonoBehaviour
 {
+#pragma warning disable 649
     [SerializeField]
     GameObject pcInstructions;
     [SerializeField]
     GameObject androidInstructions;
+#pragma warning restore 649
 
     private void Awake()
     {

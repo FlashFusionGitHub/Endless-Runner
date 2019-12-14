@@ -1,17 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class Platform : MonoBehaviour
 {
+#pragma warning disable 649
     [SerializeField]
     List<GameObject> pickUps;
-
     [SerializeField]
     GameObject obstacle;
-
     [SerializeField]
     List<Transform> objectSpawnPositions;
+#pragma warning restore 649
 
     int platformSpeed;
 

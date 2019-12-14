@@ -72,6 +72,7 @@ GameObject:
   - component: {fileID: 2369600730989692370}
   - component: {fileID: 2369600730989692369}
   - component: {fileID: 2369600730989692372}
+  - component: {fileID: 8393168871988080878}
   m_Layer: 8
   m_Name: Platform
   m_TagString: Platform
@@ -93,9 +94,9 @@ Transform:
   - {fileID: 2369600731235733482}
   - {fileID: 2369600730174319233}
   - {fileID: 2369600730731942334}
-  - {fileID: 7567429244538976826}
-  - {fileID: 983970667667942045}
-  - {fileID: 5436574446377819385}
+  - {fileID: 8352831333175529729}
+  - {fileID: 1677620554700128678}
+  - {fileID: 5880936669067818946}
   - {fileID: 8361667186295721178}
   - {fileID: 2068760587437241442}
   m_Father: {fileID: 0}
@@ -198,6 +199,27 @@ MonoBehaviour:
   - {fileID: 2369600731235733482}
   - {fileID: 2369600730174319233}
   - {fileID: 2369600730731942334}
+--- !u!50 &8393168871988080878
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2369600730989692368}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 6
 --- !u!1 &2369600731235733481
 GameObject:
   m_ObjectHideFlags: 0
@@ -426,7 +448,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2af65706fc6771b45bc6becc41b1ca98, type: 3}
---- !u!4 &983970667667942045 stripped
+--- !u!4 &1677620554700128678 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1941015269011614554, guid: 2af65706fc6771b45bc6becc41b1ca98,
     type: 3}
@@ -516,7 +538,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2af65706fc6771b45bc6becc41b1ca98, type: 3}
---- !u!4 &5436574446377819385 stripped
+--- !u!4 &5880936669067818946 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1941015269011614554, guid: 2af65706fc6771b45bc6becc41b1ca98,
     type: 3}
@@ -606,7 +628,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2af65706fc6771b45bc6becc41b1ca98, type: 3}
---- !u!4 &7567429244538976826 stripped
+--- !u!4 &8352831333175529729 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1941015269011614554, guid: 2af65706fc6771b45bc6becc41b1ca98,
     type: 3}

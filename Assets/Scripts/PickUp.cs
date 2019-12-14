@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PickUp : MonoBehaviour
 {
@@ -23,16 +21,4 @@ public class PickUp : MonoBehaviour
     public CrystalSizes CrystalSize { get { return crystalSize; } set { crystalSize = value; } }
     public int Score { get { return score; } set { score = value; } }
     public float Fuel { get { return fuel; } set { fuel = value; } }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

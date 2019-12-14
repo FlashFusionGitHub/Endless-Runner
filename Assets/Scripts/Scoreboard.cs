@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,13 +20,10 @@ public class Scoreboard : MonoBehaviour
     // Highscore UI Elements
     public Transform m_highscoreContainer;
     public Transform m_highscoreTemplate;
-
     // Highscore entry UI transform
     List<Transform> hsEntryTransforms;
-
     // List of highScoreEntries
     List<HighScoreEntry> hsEntryList;
-
     int highestScore;
 
     public int HighestScore { get { return highestScore; } }

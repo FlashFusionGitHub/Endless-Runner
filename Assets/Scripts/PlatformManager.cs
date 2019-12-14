@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 // Manages every instatiated platform in the scene - used for:
@@ -9,24 +8,23 @@ using UnityEngine;
 
 public class PlatformManager : MonoBehaviour
 {
+#pragma warning disable 649
     // The platform to spawn
     [SerializeField]
     Platform platform;
-
     // The frequency in which platforms are spawned
     [SerializeField]
     float spawnTime;
-
-    // Spawn Timer - used to count down the the spawnTime
-    float spawnTimer;
-
     // The min / max Y values at which the platform can spawn at; 
     [SerializeField]
     float minYSpawn, maxYSpawn;
-
     // the platforms max move speed
     [SerializeField]
     int platformSpeed;
+#pragma warning restore 649
+
+    // Spawn Timer - used to count down the the spawnTime
+    float spawnTimer;
 
     // A list to hold all instantiated platforms
     List<Platform> platforms = new List<Platform>();

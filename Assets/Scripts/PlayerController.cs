@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 /* Player controller can perform the following functions
@@ -10,6 +8,7 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
+#pragma warning disable 649
     // Players vertical propulsion force - for jetpack
     [SerializeField]
     int propulsionForce;
@@ -19,18 +18,12 @@ public class PlayerController : MonoBehaviour
     // The players current grounded state - is the player touching a platform
     [SerializeField]
     bool isGrounded;
-    // Reference to the players rigidbody component
-    Rigidbody2D rb;
-    // Reference to the players animator
-    Animator anim;
-
     // Jetpack current fuel amount
     [SerializeField]
     float currentFuel;
     // The max fuel the play can carry
     [SerializeField]
     float maxFuel;
-
     // The players current score
     [SerializeField]
     int score;
@@ -40,10 +33,15 @@ public class PlayerController : MonoBehaviour
     // Reference to audio manager
     [SerializeField]
     AudioManager audioManager;
-
     // Reference to the fuel gauge image
     [SerializeField]
     Image fuelGauge;
+#pragma warning restore 649
+
+    // Reference to the players rigidbody component
+    Rigidbody2D rb;
+    // Reference to the players animator
+    Animator anim;
 
     bool boost;
 
@@ -192,9 +190,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // Check when the player enters or exits and platform - update grounded state accordingly
+    // Evaluates collision stay between Colliders and this component
     private void OnCollisionStay2D(Collision2D collision)
     {
+        // Check when the player enters or exits and platform - update grounded state accordingly
         if (!isGrounded)
         {
             if (collision.collider.tag == "Platform")
@@ -204,6 +203,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // Evaluates collision enter between Colliders and this component
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.tag == "Spikes")
@@ -222,6 +222,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // Evaluates collision exit between Colliders and this component
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.collider.tag == "Platform")
@@ -230,6 +231,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // Evaluates Collisions between Trigger Colliders and and this component
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "PickUp")
@@ -239,11 +241,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // Used for android UI buttons
+    // This function is added to the UI Boost Button 'On Press Event'
     public void boostOnPress()
     {
         boost = true;
     }
-
+    // Used for android UI buttons
+    // This function is added to the UI Boost Button 'On Release Event'
     public void boostOnRelease()
     {
         boost = false;

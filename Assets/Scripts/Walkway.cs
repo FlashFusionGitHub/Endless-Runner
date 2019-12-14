@@ -5,13 +5,14 @@ using UnityEngine;
 // An infinitely scrolling walkway
 public class Walkway : MonoBehaviour
 {
+#pragma warning disable 649
     // Reference to the walkway tile gameobjects
     [SerializeField]
     GameObject[] walkwayTiles;
-
     // The walkways max move speed
     [SerializeField]
     int walkwaySpeed;
+#pragma warning restore 649
 
     // Boolean to stop the walkway recycling tiles
     bool stopWalkway;

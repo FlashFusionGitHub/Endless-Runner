@@ -1,21 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Audio;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 // Manages all audio available in the game
 public class AudioManager : MonoBehaviour
 {
+#pragma warning disable 649
     // Array of audio objects 
     [SerializeField]
     Audio[] myAudio;
-
     [SerializeField]
     Slider sfxSlider, musicSlider;
-
     [SerializeField]
     Button muteButton, unMuteButton;
+#pragma warning restore 649
 
     // Set the instance to this AudioManager if it is null on awake
     void Awake()
