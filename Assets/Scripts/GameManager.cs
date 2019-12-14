@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     Button retryButton;
     [SerializeField]
-    Button pauseButton, resumeButton;
+    Button pauseButton;
 
     // Reference to the platform manager
     [SerializeField]
@@ -106,6 +106,7 @@ public class GameManager : MonoBehaviour
         walkway.StopWalkway = true;
         platformManager.SpawnPlatform = true;
 
+        player.EnableWindowsControls = true;
         EnableAndroidButtons();
     }
 
@@ -141,9 +142,9 @@ public class GameManager : MonoBehaviour
 
     public void Pause()
     {
+        player.boostOnRelease();
         pause = true;
         Time.timeScale = 0;
-
         DisableAndroidButtons();
     }
 

@@ -47,9 +47,14 @@ public class PlayerController : MonoBehaviour
 
     bool boost;
 
+    bool enableWindowsControls;
+
     // Getters for score and died
     public int Score { get { return score; } }
     public bool Died { get { return died; } }
+
+    // setter for disable windows Controls
+    public bool EnableWindowsControls { set { enableWindowsControls = value; } }
 
     // Start is called before the first frame update
     void Start()
@@ -60,29 +65,20 @@ public class PlayerController : MonoBehaviour
         anim = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
+    // PlayerUpdate is called once per frame
     public void PlayerUpdate()
     {
+        if(enableWindowsControls)
+            WindowsandUnityControls();
+
         UpdateFuelGauge();
+        JetPack();
+        playerAnimations();
+    }
 
-#if UNITY_STANDALONE_WIN || UNITY_EDITOR
-
-        if (Input.GetKey(KeyCode.UpArrow))
-        {
-            boost = true;
-        }
-        else
-        {
-            boost = false;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Jump();
-        }
-#endif
-
-        if(boost)
+    void JetPack()
+    {
+        if (boost)
         {
             Propulsion();
         }
@@ -90,37 +86,6 @@ public class PlayerController : MonoBehaviour
         {
             if (audioManager.GetAudio("JetPack").source.isPlaying)
                 audioManager.GetAudio("JetPack").source.Stop();
-        }
-
-        if (fuelGauge.fillAmount > 0f)
-        {
-            // sets isFalling to false if the player collects fuel while falling
-            anim.SetBool("isFalling", false);
-
-            // check player is touching ground - set isJumping animator state accordingly
-            if (isGrounded)
-            {
-                anim.SetBool("isJumping", false);
-            }
-            else if (!isGrounded)
-            {
-                anim.SetBool("isJumping", true);
-            }
-        }
-        else
-        {
-            // sets isJumping to false if the player runs out of fuel mid flight
-            anim.SetBool("isJumping", false);
-
-            // check player is touching ground - set isJumping animator state accordingly
-            if (isGrounded)
-            {
-                anim.SetBool("isFalling", false);
-            }
-            else if (!isGrounded)
-            {
-                anim.SetBool("isFalling", true);
-            }
         }
     }
 
@@ -173,6 +138,60 @@ public class PlayerController : MonoBehaviour
         fuelGauge.fillAmount = currentFuel / maxFuel;
     }
 
+    private void WindowsandUnityControls()
+    {
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR
+
+        if (Input.GetKey(KeyCode.UpArrow))
+        {
+            boost = true;
+        }
+        else
+        {
+            boost = false;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Jump();
+        }
+#endif
+    }
+
+    void playerAnimations()
+    {
+        if (fuelGauge.fillAmount > 0f)
+        {
+            // sets isFalling to false if the player collects fuel while falling
+            anim.SetBool("isFalling", false);
+
+            // check player is touching ground - set isJumping animator state accordingly
+            if (isGrounded)
+            {
+                anim.SetBool("isJumping", false);
+            }
+            else if (!isGrounded)
+            {
+                anim.SetBool("isJumping", true);
+            }
+        }
+        else
+        {
+            // sets isJumping to false if the player runs out of fuel mid flight
+            anim.SetBool("isJumping", false);
+
+            // check player is touching ground - set isJumping animator state accordingly
+            if (isGrounded)
+            {
+                anim.SetBool("isFalling", false);
+            }
+            else if (!isGrounded)
+            {
+                anim.SetBool("isFalling", true);
+            }
+        }
+    }
+
     // Check when the player enters or exits and platform - update grounded state accordingly
     private void OnCollisionStay2D(Collision2D collision)
     {
@@ -183,15 +202,22 @@ public class PlayerController : MonoBehaviour
                 isGrounded = true;
             }
         }
+    }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
         if (collision.collider.tag == "Spikes")
         {
-            if (audioManager.GetAudio("JetPack").source.isPlaying)
+            if(audioManager.GetAudio("JetPack").source.isPlaying)
                 audioManager.GetAudio("JetPack").source.Stop();
+
+            if (audioManager.GetAudio("Jump").source.isPlaying)
+                audioManager.GetAudio("Jump").source.Stop();
 
             audioManager.PlayAudio("Die");
 
             died = true;
+
             gameObject.SetActive(false);
         }
     }
@@ -221,5 +247,8 @@ public class PlayerController : MonoBehaviour
     public void boostOnRelease()
     {
         boost = false;
+
+        if (audioManager.GetAudio("JetPack").source.isPlaying)
+            audioManager.GetAudio("JetPack").source.Stop();
     }
 }
