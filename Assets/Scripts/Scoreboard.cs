@@ -17,15 +17,22 @@ public class Scoreboard : MonoBehaviour
         public List<HighScoreEntry> highscoreEntryList;
     }
 
+#pragma warning disable 649
     // Highscore UI Elements
-    public Transform m_highscoreContainer;
-    public Transform m_highscoreTemplate;
+    [SerializeField]
+    Transform m_highscoreContainer;
+    [SerializeField]
+    Transform m_highscoreTemplate;
+#pragma warning restore 649
+
     // Highscore entry UI transform
     List<Transform> hsEntryTransforms;
     // List of highScoreEntries
     List<HighScoreEntry> hsEntryList;
+
     int highestScore;
 
+    // Getter for the HighestScore
     public int HighestScore { get { return highestScore; } }
 
     // Start is called before the first frame update
@@ -93,6 +100,7 @@ public class Scoreboard : MonoBehaviour
         PlayerPrefs.Save();
     }
 
+    // Populates the Highscore Transform data fields
     void CreateHighscoreTransform(HighScoreEntry hsEntry, Transform container, List<Transform> transforms)
     {
         float templateHeight = 100f;

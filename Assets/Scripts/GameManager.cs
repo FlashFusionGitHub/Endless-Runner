@@ -39,8 +39,6 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     GameObject fuelGauge;
     [SerializeField]
-    Canvas canvas;
-    [SerializeField]
     AudioManager audioManager;
     [SerializeField]
     Button jumpButton, boostButton;
@@ -64,7 +62,6 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-
         if (!pause)
         {
             StartCoroutine(AddScore());
@@ -78,9 +75,10 @@ public class GameManager : MonoBehaviour
                     doOnce = true;
                 }
             }
-
-            player.PlayerUpdate();
-            platformManager.PlatformManagerUpdate();
+            else
+            {
+                player.PlayerUpdate();
+            }
         }
     }
 
@@ -107,7 +105,6 @@ public class GameManager : MonoBehaviour
 
     void End()
     {
-
         DisableAndroidButtons();
 
         fuelGauge.SetActive(false);

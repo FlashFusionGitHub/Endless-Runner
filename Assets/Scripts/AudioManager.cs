@@ -119,6 +119,8 @@ public class AudioManager : MonoBehaviour
         {
             muteButton.gameObject.SetActive(false);
             unMuteButton.gameObject.SetActive(true);
+
+            PlayerPrefs.SetInt("Mute", 0);
         }
 
         foreach (Audio audio in myAudio)
@@ -136,6 +138,8 @@ public class AudioManager : MonoBehaviour
         {
             muteButton.gameObject.SetActive(false);
             unMuteButton.gameObject.SetActive(true);
+
+            PlayerPrefs.SetInt("Mute", 0);
         }
 
         foreach (Audio audio in myAudio)

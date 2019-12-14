@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 
 /* Player controller can perform the following functions
-    - Moving & Jumping
+    - Jumping
     - Interacting with obstacles
     - Collecting items */
 
