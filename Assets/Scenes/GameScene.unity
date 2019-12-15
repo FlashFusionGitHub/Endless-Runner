@@ -893,6 +893,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 269858686}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &110044711
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5431,7 +5442,6 @@ MonoBehaviour:
   player: {fileID: 27661412}
   scoreboard: {fileID: 2140479789}
   fuelGauge: {fileID: 1379088852}
-  canvas: {fileID: 1973897387}
   audioManager: {fileID: 488299421}
   jumpButton: {fileID: 252415812}
   boostButton: {fileID: 1922377197}
