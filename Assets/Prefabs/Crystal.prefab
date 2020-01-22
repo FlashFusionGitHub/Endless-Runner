@@ -10,11 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 2123866779475143859}
   - component: {fileID: 7649085276242181048}
-  - component: {fileID: 7878691969123413623}
   - component: {fileID: 7732061279104109566}
   - component: {fileID: 268097868080004030}
+  - component: {fileID: 6743961256775317478}
   m_Layer: 9
-  m_Name: Large Crystal
+  m_Name: Crystal
   m_TagString: PickUp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -83,21 +83,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &7878691969123413623
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6710214017318424547}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 734b115a379c7ac4abbfd9644f6eafa2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  crystalSize: 3
-  score: 50
-  fuel: 5
 --- !u!61 &7732061279104109566
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -144,3 +129,16 @@ ScaleConstraint:
   - sourceTransform: {fileID: 2369600730989692371, guid: 75601b76ea36c3640be9d07ffe722bf3,
       type: 3}
     weight: 1
+--- !u!114 &6743961256775317478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6710214017318424547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9d29e6b72ee38843af3a03398668d88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_score: 50

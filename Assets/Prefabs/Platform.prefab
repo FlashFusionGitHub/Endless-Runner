@@ -94,9 +94,9 @@ Transform:
   - {fileID: 2369600731235733482}
   - {fileID: 2369600730174319233}
   - {fileID: 2369600730731942334}
-  - {fileID: 8352831333175529729}
-  - {fileID: 1677620554700128678}
-  - {fileID: 5880936669067818946}
+  - {fileID: 7567429244538976826}
+  - {fileID: 983970667667942045}
+  - {fileID: 5436574446377819385}
   - {fileID: 8361667186295721178}
   - {fileID: 2068760587437241442}
   m_Father: {fileID: 0}
@@ -189,12 +189,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f18e0351692c774589adc96f9ef2bfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickUps:
-  - {fileID: 3122091646371036100, guid: e8e143b80e1bae4408dc464e5dc7658e, type: 3}
-  - {fileID: 5097188970224517714, guid: 2b47ff2d649e5a54ba2f565ced0e65a8, type: 3}
-  - {fileID: 6710214017318424547, guid: df1dd96db51c05d4d97632b72d7598f8, type: 3}
-  obstacle: {fileID: 4714677182203204019, guid: 2af65706fc6771b45bc6becc41b1ca98,
-    type: 3}
+  spikes: {fileID: 4714677182203204019, guid: 2af65706fc6771b45bc6becc41b1ca98, type: 3}
+  fuel: {fileID: 5117013508401150229, guid: 43a3f7d34e2b6a04294b94948cd47ad1, type: 3}
+  crystal: {fileID: 6710214017318424547, guid: df1dd96db51c05d4d97632b72d7598f8, type: 3}
   objectSpawnPositions:
   - {fileID: 2369600731235733482}
   - {fileID: 2369600730174319233}
@@ -448,7 +445,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2af65706fc6771b45bc6becc41b1ca98, type: 3}
---- !u!4 &1677620554700128678 stripped
+--- !u!4 &983970667667942045 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1941015269011614554, guid: 2af65706fc6771b45bc6becc41b1ca98,
     type: 3}
@@ -538,7 +535,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2af65706fc6771b45bc6becc41b1ca98, type: 3}
---- !u!4 &5880936669067818946 stripped
+--- !u!4 &5436574446377819385 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1941015269011614554, guid: 2af65706fc6771b45bc6becc41b1ca98,
     type: 3}
@@ -628,7 +625,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2af65706fc6771b45bc6becc41b1ca98, type: 3}
---- !u!4 &8352831333175529729 stripped
+--- !u!4 &7567429244538976826 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1941015269011614554, guid: 2af65706fc6771b45bc6becc41b1ca98,
     type: 3}

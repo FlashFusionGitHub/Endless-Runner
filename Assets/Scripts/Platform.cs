@@ -5,9 +5,7 @@ public class Platform : MonoBehaviour
 {
 #pragma warning disable 649
     [SerializeField]
-    List<GameObject> pickUps;
-    [SerializeField]
-    GameObject obstacle;
+    GameObject spikes, fuel, crystal;
     [SerializeField]
     List<Transform> objectSpawnPositions;
 #pragma warning restore 649
@@ -27,14 +25,14 @@ public class Platform : MonoBehaviour
         {
             RNGSpawner();
 
-            if (spawnCrystal)
+            /*if (spawnCrystal)
             {
-                Instantiate(pickUps[Random.Range(0, 3)], new Vector2(t.position.x, t.position.y + 1), Quaternion.identity, transform);
+                Instantiate(pickUps[Random.Range(0, pickUps.Count)], new Vector2(t.position.x, t.position.y + 1), Quaternion.identity, transform);
             }
             else
             {
                 Instantiate(obstacle, new Vector2(t.position.x, t.position.y + 0.5f), Quaternion.identity, transform);
-            }
+            }*/
         }
 
         obstaclePosition = transform.position.x;
