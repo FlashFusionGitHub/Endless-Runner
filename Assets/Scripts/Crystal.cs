@@ -8,7 +8,7 @@ public class Crystal : PickUp
     [SerializeField]
     int m_score;
 
-    public Crystal()
+    private void Start()
     {
         Score = m_score;
     }

@@ -8,7 +8,7 @@ public class Potion : PickUp
     [SerializeField]
     int m_fuel;
 
-    public Potion()
+    private void Start()
     {
         Fuel = m_fuel;
     }

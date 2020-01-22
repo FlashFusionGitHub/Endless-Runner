@@ -78,26 +78,22 @@ public class PlayerController : MonoBehaviour
     {
         if (boost)
         {
-            Propulsion();
-        }
-        else
-        {
-            if (audioManager.GetAudio("JetPack").source.isPlaying)
-                audioManager.GetAudio("JetPack").source.Stop();
-        }
-    }
+            // Apply an Upward force to the player
+            if (currentFuel > 0f)
+            {
+                rb.velocity = new Vector2(0, propulsionForce);
 
-    void Propulsion()
-    {
-        // Apply an Upward force to the player
-        if (currentFuel > 0f)
-        {
-            currentFuel -= 0.1f;
+                
+                currentFuel -= Time.deltaTime * 5f;
 
-            rb.AddForce(new Vector2(0, propulsionForce), ForceMode2D.Force);
-
-            if (!audioManager.GetAudio("JetPack").source.isPlaying)
-                audioManager.PlayAudio("JetPack");
+                if (!audioManager.GetAudio("JetPack").source.isPlaying)
+                    audioManager.PlayAudio("JetPack");
+            }
+            else
+            {
+                if (audioManager.GetAudio("JetPack").source.isPlaying)
+                    audioManager.GetAudio("JetPack").source.Stop();
+            }
         }
         else
         {
@@ -112,7 +108,8 @@ public class PlayerController : MonoBehaviour
         if (isGrounded)
         {
             audioManager.PlayAudio("Jump");
-            rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Force);
+
+            rb.velocity = new Vector2(0, jumpForce);
         }
 
     }

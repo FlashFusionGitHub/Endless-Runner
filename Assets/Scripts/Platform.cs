@@ -23,16 +23,7 @@ public class Platform : MonoBehaviour
     {
         foreach(Transform t in objectSpawnPositions)
         {
-            RNGSpawner();
-
-            /*if (spawnCrystal)
-            {
-                Instantiate(pickUps[Random.Range(0, pickUps.Count)], new Vector2(t.position.x, t.position.y + 1), Quaternion.identity, transform);
-            }
-            else
-            {
-                Instantiate(obstacle, new Vector2(t.position.x, t.position.y + 0.5f), Quaternion.identity, transform);
-            }*/
+            RNGSpawner(t);
         }
 
         obstaclePosition = transform.position.x;
@@ -45,31 +36,36 @@ public class Platform : MonoBehaviour
         transform.position = new Vector2(obstaclePosition -= platformSpeed * Time.deltaTime, transform.position.y);
     }
 
-    // Used to track the number of obstacles and crystals spawned on a platform
-    int obstacleCount, crystalCount;
-    // randomly spawn crystals and obstacles, ensuring every platform has at least one obstacle or one crystal
-    void RNGSpawner()
+
+    bool spawnedSpikes, spawnedPotion, spawnedCrystal;
+    // spawn a crystal, potion or obstacles, ensuring every platform has at least one of each
+    void RNGSpawner(Transform t)
     {
-        // A random number to represent the object to spawn (0 = obstacle, 1 = crystal)
-        int randomNumber = Random.Range(0, 2);
+        // A random number to represent the object to spawn (0 = spikes, 1 = potion,  2 = crystal)
+        int randomNumber = Random.Range(0, 3);
 
-        if(randomNumber == 0)
+        if(randomNumber == 0 && spawnedSpikes == false)
         {
-            obstacleCount += 1;
+            spawnedSpikes = true;
 
-            if (obstacleCount < 2)
-                spawnCrystal = false;
-            else
-                spawnCrystal = true;
+            Instantiate(spikes, new Vector2(t.position.x, t.position.y + 0.5f), Quaternion.identity, transform);
         }
-        else if (randomNumber == 1)
+        else if (randomNumber == 1 && spawnedPotion == false)
         {
-            crystalCount += 1;
+            spawnedPotion = true;
 
-            if (crystalCount < 2)
-                spawnCrystal = true;
-            else
-                spawnCrystal = false;
+            Instantiate(fuel, new Vector2(t.position.x, t.position.y + 0.45f), Quaternion.identity, transform);
+        }
+        else if (randomNumber == 2 && spawnedCrystal == false)
+        {
+            spawnedCrystal = true;
+
+            Instantiate(crystal, new Vector2(t.position.x, t.position.y + 1), Quaternion.identity, transform);
+
+        }
+        else
+        {
+            RNGSpawner(t);
         }
     }
 }
