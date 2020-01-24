@@ -234,7 +234,8 @@ public class PlayerController : MonoBehaviour
         if (collision.tag == "PickUp")
         {
             Collect(collision.GetComponent<PickUp>());
-            Destroy(collision.gameObject);
+            collision.gameObject.SetActive(false);
+            //Destroy(collision.gameObject);
         }
     }
 

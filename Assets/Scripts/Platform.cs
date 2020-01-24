@@ -18,14 +18,16 @@ public class Platform : MonoBehaviour
 
     bool spawnCrystal;
 
-    // Start is called before the first frame update
-    void Start()
+    private void OnEnable()
     {
-        foreach(Transform t in objectSpawnPositions)
+        foreach (Transform t in objectSpawnPositions)
         {
             RNGSpawner(t);
         }
+    }
 
+    void Start()
+    {
         obstaclePosition = transform.position.x;
     }
 
@@ -34,6 +36,13 @@ public class Platform : MonoBehaviour
     {
         // Move the platform each frame
         transform.position = new Vector2(obstaclePosition -= platformSpeed * Time.deltaTime, transform.position.y);
+
+        if(gameObject.transform.position.x < -15)
+        {
+            obstaclePosition = 17f;
+
+            gameObject.SetActive(false);
+        }
     }
 
 
@@ -48,24 +57,36 @@ public class Platform : MonoBehaviour
         {
             spawnedSpikes = true;
 
-            Instantiate(spikes, new Vector2(t.position.x, t.position.y + 0.5f), Quaternion.identity, transform);
+            spikes.transform.position = new Vector2(t.position.x, t.position.y + 0.5f);
+
+            spikes.SetActive(true);
         }
         else if (randomNumber == 1 && spawnedPotion == false)
         {
             spawnedPotion = true;
 
-            Instantiate(fuel, new Vector2(t.position.x, t.position.y + 0.45f), Quaternion.identity, transform);
+            fuel.transform.position = new Vector2(t.position.x, t.position.y + 0.45f);
+
+            fuel.SetActive(true);
         }
         else if (randomNumber == 2 && spawnedCrystal == false)
         {
             spawnedCrystal = true;
 
-            Instantiate(crystal, new Vector2(t.position.x, t.position.y + 1), Quaternion.identity, transform);
+            crystal.transform.position = new Vector2(t.position.x, t.position.y + 1);
 
+            crystal.SetActive(true);
         }
         else
         {
             RNGSpawner(t);
         }
+    }
+
+    private void OnDisable()
+    {
+        spawnedSpikes = false;
+        spawnedPotion = false;
+        spawnedCrystal = false;
     }
 }

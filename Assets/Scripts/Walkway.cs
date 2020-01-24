@@ -53,7 +53,7 @@ public class Walkway : MonoBehaviour
     {
         if (go.transform.position.x <= firstTilePosition.x)
         {
-            go.transform.position = new Vector2(lastTilePosition.x, go.transform.position.y);
+            go.transform.position = new Vector2(lastTilePosition.x + 4.5f, go.transform.position.y);
         }
     }
 

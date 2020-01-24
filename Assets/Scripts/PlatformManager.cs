@@ -9,9 +9,12 @@ using UnityEngine;
 public class PlatformManager : MonoBehaviour
 {
 #pragma warning disable 649
-    // The platform to spawn
+    // A pool of platforms
     [SerializeField]
-    Platform platform;
+    List<Platform> pooledPlatforms;
+    // A pool of blockades
+    [SerializeField]
+    List<GameObject> pooledBlockades;
     // The frequency in which platforms are spawned
     [SerializeField]
     float spawnTime;
@@ -25,9 +28,6 @@ public class PlatformManager : MonoBehaviour
 
     // Spawn Timer - used to count down the the spawnTime
     float spawnTimer;
-
-    // A list to hold all instantiated platforms
-    List<Platform> platforms = new List<Platform>();
 
     // boolean used to toogle when a new platform is instantiated
     bool spawnPlatforms;
@@ -50,32 +50,32 @@ public class PlatformManager : MonoBehaviour
         {
             if (spawnTimer <= 0)
             {
-                Platform plat = Instantiate(platform, new Vector2(transform.position.x, Random.Range(minYSpawn, maxYSpawn)), Quaternion.identity);
+                Platform platform = retreivePooledPlatform();
 
-                plat.PlatformSpeed = platformSpeed;
+                platform.transform.position = new Vector2(17f, Random.Range(minYSpawn, maxYSpawn));
 
-                platforms.Add(plat);
+                platform.transform.rotation = Quaternion.identity;
+
+                platform.PlatformSpeed = platformSpeed;
+
+                platform.gameObject.SetActive(true);
 
                 spawnTimer = spawnTime;
             }
         }
-
-        DestoryPlatform();
     }
 
-    // Destroys platforms once they reach a specific distance
-    void DestoryPlatform()
+    // Retreives a platform from the pool
+    Platform retreivePooledPlatform()
     {
-        foreach(Platform plat in platforms.ToArray())
+        for (int i = 0; i < pooledPlatforms.Count; i++)
         {
-            if(plat.transform.position.x <= -15)
+            if (!pooledPlatforms[i].gameObject.activeInHierarchy)
             {
-                Platform tempPlat = plat;
-
-                platforms.Remove(plat);
-
-                DestroyImmediate(tempPlat.gameObject);
+                return pooledPlatforms[i];
             }
         }
+
+        return null;
     }
 }
