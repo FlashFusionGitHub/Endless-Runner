@@ -43,6 +43,9 @@ public class PlayerController : MonoBehaviour
     // Reference to the players animator
     Animator anim;
 
+    //reference to the game manager
+    GameManager gameManager;
+
     bool boost;
 
     bool enableWindowsControls;
@@ -61,6 +64,8 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         // Get the players animator component
         anim = GetComponent<Animator>();
+        // Get the game manager component
+        gameManager = FindObjectOfType<GameManager>();
     }
 
     // PlayerUpdate is called once per frame
@@ -235,7 +240,8 @@ public class PlayerController : MonoBehaviour
         {
             Collect(collision.GetComponent<PickUp>());
             collision.gameObject.SetActive(false);
-            //Destroy(collision.gameObject);
+
+            gameManager.IncreaseDifficulty();
         }
     }
 

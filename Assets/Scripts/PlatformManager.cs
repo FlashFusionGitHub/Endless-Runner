@@ -14,7 +14,7 @@ public class PlatformManager : MonoBehaviour
     List<Platform> pooledPlatforms;
     // A pool of blockades
     [SerializeField]
-    List<GameObject> pooledBlockades;
+    List<Blockade> pooledBlockades;
     // The frequency in which platforms are spawned
     [SerializeField]
     float spawnTime;
@@ -23,7 +23,7 @@ public class PlatformManager : MonoBehaviour
     float minYSpawn, maxYSpawn;
     // the platforms max move speed
     [SerializeField]
-    int platformSpeed;
+    float obstacleSpeed;
 #pragma warning restore 649
 
     // Spawn Timer - used to count down the the spawnTime
@@ -34,6 +34,10 @@ public class PlatformManager : MonoBehaviour
 
     // Getter and Setter for spawnPlatforms boolean
     public bool SpawnPlatform { get { return spawnPlatforms; } set { spawnPlatforms = value; } }
+    // Getter and Setter for spawnTime
+    public float SpawnTime { get { return spawnTime; } set { spawnTime = value; } }
+    // Getter and Setter for obstacleSpeed
+    public float ObstacleSpeed { get { return obstacleSpeed; } set { obstacleSpeed = value; } }
 
     // Start is called before the first frame update
     void Start()
@@ -41,6 +45,7 @@ public class PlatformManager : MonoBehaviour
 
     }
 
+    bool spawnSwitch;
     // Update is called once per frame
     public void Update()
     {
@@ -50,15 +55,46 @@ public class PlatformManager : MonoBehaviour
         {
             if (spawnTimer <= 0)
             {
-                Platform platform = retreivePooledPlatform();
+                if (!spawnSwitch)
+                {
+                    Platform platform = retreivePooledPlatform();
 
-                platform.transform.position = new Vector2(17f, Random.Range(minYSpawn, maxYSpawn));
+                    if (platform == null)
+                    {
+                        AddObjectsToPool(pooledPlatforms[0].gameObject);
+                        platform = retreivePooledPlatform();
+                    }
 
-                platform.transform.rotation = Quaternion.identity;
+                    platform.transform.position = new Vector2(17f, 0f);
 
-                platform.PlatformSpeed = platformSpeed;
+                    platform.transform.rotation = Quaternion.identity;
 
-                platform.gameObject.SetActive(true);
+                    platform.PlatformSpeed = obstacleSpeed;
+
+                    platform.gameObject.SetActive(true);
+
+                    spawnSwitch = true;
+                }
+                else
+                {
+                    Blockade blockade = retreivePooledBlockade();
+
+                    if (blockade == null)
+                    {
+                        AddObjectsToPool(pooledBlockades[0].gameObject);
+                        blockade = retreivePooledBlockade();
+                    }
+
+                    blockade.transform.position = new Vector2(17f, 0);
+
+                    blockade.transform.rotation = Quaternion.identity;
+
+                    blockade.BlockadeSpeed = obstacleSpeed;
+
+                    blockade.gameObject.SetActive(true);
+
+                    spawnSwitch = false;
+                }
 
                 spawnTimer = spawnTime;
             }
@@ -77,5 +113,39 @@ public class PlatformManager : MonoBehaviour
         }
 
         return null;
+    }
+
+    // Retreives a platform from the pool
+    Blockade retreivePooledBlockade()
+    {
+        for (int i = 0; i < pooledBlockades.Count; i++)
+        {
+            if (!pooledBlockades[i].gameObject.activeInHierarchy)
+            {
+                return pooledBlockades[i];
+            }
+        }
+
+        return null;
+    }
+
+    //Add more objects to the pool
+    void AddObjectsToPool(GameObject go)
+    {
+        for(int i = 0; i < 5; i++)
+        {
+            GameObject tempGo = Instantiate(go);
+
+            tempGo.gameObject.SetActive(false);
+
+            if (tempGo.GetComponent<Platform>())
+            {
+                pooledPlatforms.Add(tempGo.GetComponent<Platform>());
+            }
+            else
+            {
+                pooledBlockades.Add(tempGo.GetComponent<Blockade>());
+            }
+        }
     }
 }

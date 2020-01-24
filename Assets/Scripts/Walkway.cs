@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 // An infinitely scrolling walkway
 public class Walkway : MonoBehaviour
@@ -25,7 +26,7 @@ public class Walkway : MonoBehaviour
     private void Awake()
     {
         firstTilePosition = walkwayTiles[0].transform.position;
-        lastTilePosition = walkwayTiles[6].transform.position;
+        lastTilePosition = walkwayTiles[walkwayTiles.Count() - 1].transform.position;
     }
 
     // Update is called once per frame

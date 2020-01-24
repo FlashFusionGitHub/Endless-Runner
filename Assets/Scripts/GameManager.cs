@@ -150,7 +150,24 @@ public class GameManager : MonoBehaviour
             currentScore += Time.deltaTime;
             currentScore = Mathf.Clamp(currentScore, 0f, player.Score);
             scoreText.text = Mathf.RoundToInt(currentScore).ToString();
+
             yield return null;
+        }
+    }
+
+
+    public void IncreaseDifficulty()
+    {
+        // prevent the platform speed from becoming impossibly fast
+        if (platformManager.ObstacleSpeed < 7f)
+        {
+            if (player.Score > 0)
+            {
+                if (player.Score % 100 == 0)
+                {
+                    platformManager.ObstacleSpeed += 0.1f;
+                }
+            }
         }
     }
 

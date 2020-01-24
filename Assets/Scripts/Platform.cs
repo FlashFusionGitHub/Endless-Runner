@@ -10,9 +10,9 @@ public class Platform : MonoBehaviour
     List<Transform> objectSpawnPositions;
 #pragma warning restore 649
 
-    int platformSpeed;
+    float platformSpeed;
 
-    public int PlatformSpeed { get { return platformSpeed; } set { platformSpeed = value; } }
+    public float PlatformSpeed { get { return platformSpeed; } set { platformSpeed = value; } }
 
     float obstaclePosition;
 
