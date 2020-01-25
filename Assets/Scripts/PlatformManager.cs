@@ -65,7 +65,7 @@ public class PlatformManager : MonoBehaviour
                         platform = retreivePooledPlatform();
                     }
 
-                    platform.transform.position = new Vector2(17f, 0f);
+                    platform.transform.position = new Vector2(17f, Random.Range(minYSpawn, maxYSpawn));
 
                     platform.transform.rotation = Quaternion.identity;
 
