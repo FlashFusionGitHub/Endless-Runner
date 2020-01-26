@@ -4,18 +4,20 @@ using UnityEngine;
 public class Platform : MonoBehaviour
 {
 #pragma warning disable 649
+    // reference to the gameobject the platform activates
     [SerializeField]
     GameObject spikes, fuel, crystal;
+    // reference the position the objects spawn at
     [SerializeField]
     List<Transform> objectSpawnPositions;
 #pragma warning restore 649
 
+    // the platforms max speed
     float platformSpeed;
-
+    // The obstacles orginal position
     float obstaclePosition;
 
-    bool spawnCrystal;
-
+    //Getter and Setter for the platform speed
     public float PlatformSpeed { get { return platformSpeed; } set { platformSpeed = value; } }
 
     private void OnEnable()
@@ -83,6 +85,7 @@ public class Platform : MonoBehaviour
         }
     }
 
+    // disable all activate objects
     private void OnDisable()
     {
         spawnedSpikes = false;

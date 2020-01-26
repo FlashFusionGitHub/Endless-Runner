@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Blockade : MonoBehaviour
 {
+
 #pragma warning disable 649
+    //Reference to the blocks to activate
     [SerializeField]
     GameObject[] blocks;
 #pragma warning restore 649
@@ -19,8 +21,6 @@ public class Blockade : MonoBehaviour
 
     public int NumberOfBlocksToEnable { get { return numberOfBlocksToEnable; } set { numberOfBlocksToEnable = value; } }
 
-    int numberOfBlocksEnabled;
-
     private void OnEnable()
     {
         obstaclePosition = transform.position.x;
@@ -31,7 +31,7 @@ public class Blockade : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Move the platform each frame
+        // Move the blockade each frame
         transform.position = new Vector2(obstaclePosition -= blockadeSpeed * Time.deltaTime, transform.position.y);
 
         if (gameObject.transform.position.x < -15)
@@ -47,10 +47,10 @@ public class Blockade : MonoBehaviour
     {
         for (int i = 0; i < numberOfBlocksToEnable; i++)
         {
-            int rnd = Random.Range(0, blocks.Length);
+            int randNum = Random.Range(0, blocks.Length);
 
-            if (!blocks[rnd].activeSelf)
-                blocks[rnd].SetActive(true);
+            if (!blocks[randNum].activeSelf)
+                blocks[randNum].SetActive(true);
 
             else i--;
         }
@@ -63,7 +63,5 @@ public class Blockade : MonoBehaviour
             if(blocks[i].activeSelf)
                 blocks[i].SetActive(false);
         }
-
-        numberOfBlocksEnabled = 0;
     }
 }

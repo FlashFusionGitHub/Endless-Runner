@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class Background : MonoBehaviour
 {
+#pragma warning disable 649
     // Reference to the background images
     [SerializeField]
     GameObject[] backgroundImages;
-
     // The backgrounds max move speed
     [SerializeField]
     int backgroundSpeed;
-
     [SerializeField]
     int backgroundImageLength;
+#pragma warning restore 649
 
     // Getter and Setter for stopwalking boolean
     public int BackgroundSpeed { get { return backgroundSpeed; } set { backgroundSpeed = value; } }

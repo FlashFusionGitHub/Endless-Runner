@@ -28,7 +28,7 @@ public class PlatformManager : MonoBehaviour
 #pragma warning restore 649
 
     // Spawn Timer - used to count down the the spawnTime
-    float spawnTimer;
+    public float spawnTimer;
 
     // boolean used to toogle when a new platform is instantiated
     bool spawnPlatforms;
@@ -46,7 +46,6 @@ public class PlatformManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        spawnTimer = spawnTime;
     }
 
     bool spawnSwitch;

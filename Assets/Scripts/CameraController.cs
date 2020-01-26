@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+#pragma warning disable 649
     // Reference to the player - the object the camera needs to follow
     [SerializeField]
     PlayerController player;
     // The distance the player can move without the camera following
     [SerializeField]
     float followOffset;
+#pragma warning restore 649
 
     // The boundary around the player
     float boundry;
@@ -36,7 +38,7 @@ public class CameraController : MonoBehaviour
 
         Vector3 newPosition = transform.position;
 
-        // If the player moves out of the boundry apply the players Y position
+        // If the player moves out of the boundary apply the players Y position
         // to the cameras Y position, otherwise set the camera to its origin position
         if (Mathf.Abs(yDifference) >= boundry)
         {
