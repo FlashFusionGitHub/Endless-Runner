@@ -24,7 +24,7 @@ public class Background : MonoBehaviour
     void Awake()
     {
         firstbackgroundImagePosition = backgroundImages[0].transform.position;
-        lastbackgroundImagePosition = backgroundImages[1].transform.position;
+        lastbackgroundImagePosition = backgroundImages[backgroundImages.Length - 1].transform.position;
     }
 
     // Update is called once per frame
