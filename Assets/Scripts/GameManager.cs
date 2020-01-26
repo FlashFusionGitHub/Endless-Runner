@@ -170,9 +170,11 @@ public class GameManager : MonoBehaviour
                     }
                 }
 
-            if ((player.Score % 200) == 0 && platformManager.numBlocks < 7)
-            {
+            if (platformManager.numBlocks < 6) {
+                if ((player.Score % 200) == 0)
+                {
                     platformManager.numBlocks += 1;
+                }
             }
         }
     }
