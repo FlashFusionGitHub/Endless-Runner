@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Blockade : MonoBehaviour
 {
-
     float blockadeSpeed;
 
     public float BlockadeSpeed { get { return blockadeSpeed; } set { blockadeSpeed = value; } }
@@ -13,14 +12,16 @@ public class Blockade : MonoBehaviour
 
     public GameObject[] blocks;
 
-    void Start()
-    {
-        obstaclePosition = transform.position.x;
-    }
+    public int numberOfBlocksToEnable;
 
+    public int NumberOfBlocksToEnable { get { return numberOfBlocksToEnable; } set { numberOfBlocksToEnable = value; } }
+
+    int numberOfBlocksEnabled;
     private void OnEnable()
     {
-        DisableBlocks();
+        obstaclePosition = transform.position.x;
+
+        EnableBlocks();
     }
 
     // Update is called once per frame
@@ -37,30 +38,28 @@ public class Blockade : MonoBehaviour
         }
     }
 
-
-    void DisableBlocks() 
-    {
-        foreach(GameObject go in blocks)
-        {
-            int num = Random.Range(0, 2);
-
-            if(num == 0)
-            {
-                go.SetActive(false);
-            }
-        }
-    }
-
+    //Randomly enable blocks
     void EnableBlocks()
     {
-        foreach (GameObject go in blocks)
+        for (int i = 0; i < numberOfBlocksToEnable; i++)
         {
-            go.SetActive(true);
+            int rnd = Random.Range(0, blocks.Length);
+
+            if (!blocks[rnd].activeSelf)
+                blocks[rnd].SetActive(true);
+
+            else i--;
         }
     }
 
     private void OnDisable()
     {
-        EnableBlocks();
+        for (int i = 0; i < blocks.Length; i++)
+        {
+            if(blocks[i].activeSelf)
+                blocks[i].SetActive(false);
+        }
+
+        numberOfBlocksEnabled = 0;
     }
 }

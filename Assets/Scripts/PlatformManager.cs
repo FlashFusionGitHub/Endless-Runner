@@ -5,6 +5,7 @@ using UnityEngine;
 // controlling platforms speed
 // instantiating platforms at a given frequency
 // destroying platforms
+// Also manages the object pool for the the platforms and blockades
 
 public class PlatformManager : MonoBehaviour
 {
@@ -39,10 +40,13 @@ public class PlatformManager : MonoBehaviour
     // Getter and Setter for obstacleSpeed
     public float ObstacleSpeed { get { return obstacleSpeed; } set { obstacleSpeed = value; } }
 
+    //number of blocks to disable
+    public int numBlocks;
+
     // Start is called before the first frame update
     void Start()
     {
-
+        spawnTimer = spawnTime;
     }
 
     bool spawnSwitch;
@@ -88,6 +92,8 @@ public class PlatformManager : MonoBehaviour
                     blockade.transform.position = new Vector2(17f, 0);
 
                     blockade.transform.rotation = Quaternion.identity;
+
+                    blockade.NumberOfBlocksToEnable = numBlocks;
 
                     blockade.BlockadeSpeed = obstacleSpeed;
 
@@ -146,6 +152,21 @@ public class PlatformManager : MonoBehaviour
             {
                 pooledBlockades.Add(tempGo.GetComponent<Blockade>());
             }
+        }
+    }
+
+    public void IncreaseSpeedOfAllObstacles(float speedIncrease)
+    {
+        obstacleSpeed += speedIncrease;
+
+        foreach(Platform p in pooledPlatforms)
+        {
+            p.PlatformSpeed = ObstacleSpeed;
+        }
+
+        foreach (Blockade b in pooledBlockades)
+        {
+            b.BlockadeSpeed = ObstacleSpeed;
         }
     }
 }

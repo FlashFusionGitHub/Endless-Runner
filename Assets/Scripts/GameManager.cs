@@ -159,15 +159,20 @@ public class GameManager : MonoBehaviour
     public void IncreaseDifficulty()
     {
         // prevent the platform speed from becoming impossibly fast
-        if (platformManager.ObstacleSpeed < 8f)
-        {
             if (player.Score > 0)
             {
                 if ((player.Score % 100) == 0)
                 {
-                    platformManager.ObstacleSpeed += 0.1f;
-                    platformManager.SpawnTime += 0.05f;
+                    if (platformManager.ObstacleSpeed < 6f)
+                    {
+                        platformManager.IncreaseSpeedOfAllObstacles(0.15f);
+                        platformManager.SpawnTime -= 0.05f;
+                    }
                 }
+
+            if ((player.Score % 200) == 0 && platformManager.numBlocks < 7)
+            {
+                    platformManager.numBlocks += 1;
             }
         }
     }

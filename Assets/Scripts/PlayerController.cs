@@ -241,7 +241,8 @@ public class PlayerController : MonoBehaviour
             Collect(collision.GetComponent<PickUp>());
             collision.gameObject.SetActive(false);
 
-            gameManager.IncreaseDifficulty();
+            if(collision.GetComponent<Crystal>())
+                gameManager.IncreaseDifficulty();
         }
     }
 
