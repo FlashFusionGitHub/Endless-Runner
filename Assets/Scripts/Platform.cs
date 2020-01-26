@@ -39,7 +39,7 @@ public class Platform : MonoBehaviour
         // Move the platform each frame
         transform.position = new Vector2(obstaclePosition -= platformSpeed * Time.deltaTime, transform.position.y);
 
-        if(gameObject.transform.position.x < -15)
+        if(gameObject.transform.position.x < -17f)
         {
             obstaclePosition = 17f;
 

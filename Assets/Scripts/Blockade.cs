@@ -34,7 +34,7 @@ public class Blockade : MonoBehaviour
         // Move the blockade each frame
         transform.position = new Vector2(obstaclePosition -= blockadeSpeed * Time.deltaTime, transform.position.y);
 
-        if (gameObject.transform.position.x < -15)
+        if (gameObject.transform.position.x < -17f)
         {
             obstaclePosition = 17f;
 

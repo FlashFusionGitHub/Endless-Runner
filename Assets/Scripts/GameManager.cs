@@ -93,7 +93,7 @@ public class GameManager : MonoBehaviour
         startButton.gameObject.SetActive(false);
         walkway.StopWalkway = true;
         platformManager.SpawnPlatform = true;
-        platformManager.spawnTimer = 1;
+        platformManager.spawnTimer = 2;
         player.EnableWindowsControls = true;
         EnableAndroidButtons();
     }
