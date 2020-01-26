@@ -12,11 +12,11 @@ public class Platform : MonoBehaviour
 
     float platformSpeed;
 
-    public float PlatformSpeed { get { return platformSpeed; } set { platformSpeed = value; } }
-
     float obstaclePosition;
 
     bool spawnCrystal;
+
+    public float PlatformSpeed { get { return platformSpeed; } set { platformSpeed = value; } }
 
     private void OnEnable()
     {

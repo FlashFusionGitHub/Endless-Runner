@@ -4,19 +4,23 @@ using UnityEngine;
 
 public class Blockade : MonoBehaviour
 {
-    float blockadeSpeed;
+#pragma warning disable 649
+    [SerializeField]
+    GameObject[] blocks;
+#pragma warning restore 649
 
-    public float BlockadeSpeed { get { return blockadeSpeed; } set { blockadeSpeed = value; } }
+    float blockadeSpeed;
 
     float obstaclePosition;
 
-    public GameObject[] blocks;
+    int numberOfBlocksToEnable;
 
-    public int numberOfBlocksToEnable;
+    public float BlockadeSpeed { get { return blockadeSpeed; } set { blockadeSpeed = value; } }
 
     public int NumberOfBlocksToEnable { get { return numberOfBlocksToEnable; } set { numberOfBlocksToEnable = value; } }
 
     int numberOfBlocksEnabled;
+
     private void OnEnable()
     {
         obstaclePosition = transform.position.x;

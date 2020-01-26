@@ -121,7 +121,7 @@ public class PlatformManager : MonoBehaviour
         return null;
     }
 
-    // Retreives a platform from the pool
+    // Retreives a blockade from the pool
     Blockade retreivePooledBlockade()
     {
         for (int i = 0; i < pooledBlockades.Count; i++)
@@ -155,6 +155,7 @@ public class PlatformManager : MonoBehaviour
         }
     }
 
+    // increases the speed of all obstacles in the scene
     public void IncreaseSpeedOfAllObstacles(float speedIncrease)
     {
         obstacleSpeed += speedIncrease;
