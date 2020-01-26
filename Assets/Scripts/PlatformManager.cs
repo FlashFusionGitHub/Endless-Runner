@@ -138,7 +138,7 @@ public class PlatformManager : MonoBehaviour
     //Add more objects to the pool
     void AddObjectsToPool(GameObject go)
     {
-        for(int i = 0; i < 5; i++)
+        for(int i = 0; i < 3; i++)
         {
             GameObject tempGo = Instantiate(go);
 
