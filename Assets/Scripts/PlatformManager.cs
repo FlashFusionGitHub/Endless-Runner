@@ -10,12 +10,8 @@ using UnityEngine;
 public class PlatformManager : MonoBehaviour
 {
 #pragma warning disable 649
-    // A pool of platforms
     [SerializeField]
-    List<Platform> pooledPlatforms;
-    // A pool of blockades
-    [SerializeField]
-    List<Blockade> pooledBlockades;
+    ObjectPooler platformObjectPooler, blockadesObjectPooler;
     // The frequency in which platforms are spawned
     [SerializeField]
     float spawnTime;
@@ -60,43 +56,31 @@ public class PlatformManager : MonoBehaviour
             {
                 if (!spawnSwitch)
                 {
-                    Platform platform = retreivePooledPlatform();
+                    GameObject platformGameObject = platformObjectPooler.RetreivePooledObject();
 
-                    if (platform == null)
-                    {
-                        AddObjectsToPool(pooledPlatforms[0].gameObject);
-                        platform = retreivePooledPlatform();
-                    }
+                    platformGameObject.transform.position = new Vector2(17f, Random.Range(minYSpawn, maxYSpawn));
 
-                    platform.transform.position = new Vector2(17f, Random.Range(minYSpawn, maxYSpawn));
+                    platformGameObject.transform.rotation = Quaternion.identity;
 
-                    platform.transform.rotation = Quaternion.identity;
+                    platformGameObject.GetComponent<Platform>().PlatformSpeed = obstacleSpeed;
 
-                    platform.PlatformSpeed = obstacleSpeed;
-
-                    platform.gameObject.SetActive(true);
+                    platformGameObject.gameObject.SetActive(true);
 
                     spawnSwitch = true;
                 }
                 else
                 {
-                    Blockade blockade = retreivePooledBlockade();
+                    GameObject blockadeGameObject = blockadesObjectPooler.RetreivePooledObject();
 
-                    if (blockade == null)
-                    {
-                        AddObjectsToPool(pooledBlockades[0].gameObject);
-                        blockade = retreivePooledBlockade();
-                    }
+                    blockadeGameObject.transform.position = new Vector2(17f, 0);
 
-                    blockade.transform.position = new Vector2(17f, 0);
+                    blockadeGameObject.transform.rotation = Quaternion.identity;
 
-                    blockade.transform.rotation = Quaternion.identity;
+                    blockadeGameObject.GetComponent<Blockade>().NumberOfBlocksToEnable = numBlocks;
 
-                    blockade.NumberOfBlocksToEnable = numBlocks;
+                    blockadeGameObject.GetComponent<Blockade>().BlockadeSpeed = obstacleSpeed;
 
-                    blockade.BlockadeSpeed = obstacleSpeed;
-
-                    blockade.gameObject.SetActive(true);
+                    blockadeGameObject.gameObject.SetActive(true);
 
                     spawnSwitch = false;
                 }
@@ -106,67 +90,19 @@ public class PlatformManager : MonoBehaviour
         }
     }
 
-    // Retreives a platform from the pool
-    Platform retreivePooledPlatform()
-    {
-        for (int i = 0; i < pooledPlatforms.Count; i++)
-        {
-            if (!pooledPlatforms[i].gameObject.activeInHierarchy)
-            {
-                return pooledPlatforms[i];
-            }
-        }
-
-        return null;
-    }
-
-    // Retreives a blockade from the pool
-    Blockade retreivePooledBlockade()
-    {
-        for (int i = 0; i < pooledBlockades.Count; i++)
-        {
-            if (!pooledBlockades[i].gameObject.activeInHierarchy)
-            {
-                return pooledBlockades[i];
-            }
-        }
-
-        return null;
-    }
-
-    //Add more objects to the pool
-    void AddObjectsToPool(GameObject go)
-    {
-        for(int i = 0; i < 3; i++)
-        {
-            GameObject tempGo = Instantiate(go);
-
-            tempGo.gameObject.SetActive(false);
-
-            if (tempGo.GetComponent<Platform>())
-            {
-                pooledPlatforms.Add(tempGo.GetComponent<Platform>());
-            }
-            else
-            {
-                pooledBlockades.Add(tempGo.GetComponent<Blockade>());
-            }
-        }
-    }
-
     // increases the speed of all obstacles in the scene
     public void IncreaseSpeedOfAllObstacles(float speedIncrease)
     {
         obstacleSpeed += speedIncrease;
 
-        foreach(Platform p in pooledPlatforms)
+        foreach(GameObject p in platformObjectPooler.objectsToPool)
         {
-            p.PlatformSpeed = ObstacleSpeed;
+            p.GetComponent<Platform>().PlatformSpeed = ObstacleSpeed;
         }
 
-        foreach (Blockade b in pooledBlockades)
+        foreach (GameObject b in blockadesObjectPooler.objectsToPool)
         {
-            b.BlockadeSpeed = ObstacleSpeed;
+            b.GetComponent<Blockade>().BlockadeSpeed = ObstacleSpeed;
         }
     }
 }

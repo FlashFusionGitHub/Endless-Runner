@@ -58,28 +58,15 @@ public class AudioManager : MonoBehaviour
 
         if (PlayerPrefs.GetInt("Mute") == 1)
         {
-            unMuteButton.gameObject.SetActive(false);
-            muteButton.gameObject.SetActive(true);
-
             MuteAudio();
-        }
-        else
-        {
-            unMuteButton.gameObject.SetActive(true);
-            muteButton.gameObject.SetActive(false);
-
-            UnMuteAudio();
         }
     }
 
     private void Update()
     {
-        if(PlayerPrefs.GetFloat("SFXVolume") == 0.0f && PlayerPrefs.GetFloat("MusicVolume") == 0.0f)
+        if(PlayerPrefs.GetFloat("MusicVolume") == 0.0f && PlayerPrefs.GetFloat("SFXVolume") == 0.0f)
         {
             MuteAudio();
-
-            muteButton.gameObject.SetActive(true);
-            unMuteButton.gameObject.SetActive(false);
         }
     }
 
@@ -115,12 +102,9 @@ public class AudioManager : MonoBehaviour
     {
         PlayerPrefs.SetFloat("MusicVolume", slider.value);
 
-        if (slider.value > 0.0f)
+        if (PlayerPrefs.GetFloat("MusicVolume") > 0.0f)
         {
-            muteButton.gameObject.SetActive(false);
-            unMuteButton.gameObject.SetActive(true);
-
-            PlayerPrefs.SetInt("Mute", 0);
+            UnMuteAudio();
         }
 
         foreach (Audio audio in myAudio)
@@ -134,12 +118,9 @@ public class AudioManager : MonoBehaviour
     {
         PlayerPrefs.SetFloat("SFXVolume", slider.value);
 
-        if (slider.value > 0.0f)
+        if (PlayerPrefs.GetFloat("SFXVolume") > 0.0f)
         {
-            muteButton.gameObject.SetActive(false);
-            unMuteButton.gameObject.SetActive(true);
-
-            PlayerPrefs.SetInt("Mute", 0);
+            UnMuteAudio();
         }
 
         foreach (Audio audio in myAudio)
@@ -156,8 +137,11 @@ public class AudioManager : MonoBehaviour
 
         for (int i = 0; i < myAudio.Length; i++)
         {
-            myAudio[i].source.volume = 0;
+            myAudio[i].source.mute = true;
         }
+
+        unMuteButton.gameObject.SetActive(false);
+        muteButton.gameObject.SetActive(true);
     }
 
     // UnMutes all audio in the audio array
@@ -165,24 +149,23 @@ public class AudioManager : MonoBehaviour
     {
         PlayerPrefs.SetInt("Mute", 0);
 
-        if (PlayerPrefs.GetFloat("SFXVolume") == 0.0f && PlayerPrefs.GetFloat("MusicVolume") == 0.0f)
-        {
-            muteButton.gameObject.SetActive(true);
-            unMuteButton.gameObject.SetActive(false);
-
-            PlayerPrefs.SetFloat("SFXVolume", 1.0f);
-            PlayerPrefs.SetFloat("MusicVolume", 1.0f);
-
-            sfxSlider.value = PlayerPrefs.GetFloat("SFXVolume");
-            musicSlider.value = PlayerPrefs.GetFloat("MusicVolume");
-        }
-
         for (int i = 0; i < myAudio.Length; i++)
         {
-            if(myAudio[i]._AudioType == Audio.AudioType.MUSIC)
-                myAudio[i].source.volume = PlayerPrefs.GetFloat("MusicVolume");
-            if (myAudio[i]._AudioType == Audio.AudioType.SFX)
-                myAudio[i].source.volume = PlayerPrefs.GetFloat("SFXVolume");
+            myAudio[i].source.mute = false;
+
+            if (musicSlider.value == 0.0f && sfxSlider.value == 0.0f)
+            {
+                myAudio[i].source.volume = 0.5f;
+            }
         }
+
+        if (musicSlider.value == 0.0f && sfxSlider.value == 0.0f)
+        {
+            musicSlider.value = 0.5f;
+            sfxSlider.value = 0.5f;
+        }
+
+        unMuteButton.gameObject.SetActive(true);
+        muteButton.gameObject.SetActive(false);
     }
 }
